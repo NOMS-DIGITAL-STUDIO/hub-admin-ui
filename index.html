@@ -88,10 +88,22 @@
           return xhr;
         }
 
-        var xhr = createCORSRequest('GET', 'https://hub-admin.herokuapp.com/content-items');
+        var xhr = createCORSRequest('POST', 'https://hub-admin.herokuapp.com/content-items');
         if (!xhr) {
           throw new Error('CORS not supported');
         }
+      
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            console.log(this.responseText);
+        };
+      
+        var data = new FormData();
+        data.append('title', 'Hello from Z');
+
+      
+        xhr.send(data);
+      
   </script>
       
   </body>
