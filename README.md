@@ -1,4 +1,4 @@
 hub-admin-ui
 ====
 
-[Click here](https://www.google.com/chrome/) for Admin UI 
+[Click here](https://noms-digital-studio.github.io/hub-admin-ui/) for Admin UI 
