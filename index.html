@@ -38,8 +38,8 @@
   <script type="text/javascript">
 
       $(document).ready(function() {
-            $('form').ajaxForm(function(d) { 
-                console.log("DONE!",d); 
+            $('form').ajaxForm(function(i,d,t) { 
+                console.log("DONE!",i,d,t); 
                 $('form').resetForm();
             }); 
         }); 
