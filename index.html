@@ -47,9 +47,10 @@
             
             $('form').ajaxForm(function(data,status,ajaxObject) {
                 
-                console.log(ajaxObject.getResponseHeader('Location'))
                 
-                $('#msg').text(status.toUpperCase() + ' - status code: ' + ajaxObject.status).show()
+                $('#msg').html(status.toUpperCase() 
+                               + ' - status code: ' 
+                               + ajaxObject.status + '<br /><a target="_blank" href="'+ajaxObject.getResponseHeader('Location')+'">Open URL</a>').show()
                 $('form').resetForm();
             }); 
         }); 
