@@ -38,9 +38,9 @@
   <script type="text/javascript">
 
       $(document).ready(function() {
-          alert('x')
-            $('form').ajaxForm(function() { 
-                alert("DONE!"); 
+            $('form').ajaxForm(function(d) { 
+                console.log("DONE!",d); 
+                $('form').resetForm();
             }); 
         }); 
 
