@@ -39,7 +39,10 @@
 
       $(document).ready(function() {
             $('form').ajaxForm(function(i,d,t) { 
-                console.log("DONE!",i,d,t); 
+                console.log("DONE!"); 
+                console.log(i); 
+                console.log('--', d); 
+                console.log('----',t); 
                 $('form').resetForm();
             }); 
         }); 
