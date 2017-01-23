@@ -19,7 +19,7 @@
       
   <div class="container">
       <h1>The Hub Admin UI</h1>
-      <form method="post" enctype="multipart/form-data" action="https://hub-admin.herokuapp.com/content-items">
+      <form method="post" enctype="multipart/form-data" action="https://hub-admin.herokuapp.com/hub-admin/content-items">
           <div class="form-group">
             <input type="text" name="title" placeholder="Enter title" />  
           </div>
@@ -57,7 +57,7 @@
         }); 
 
       function  contentFeedUrl(location) {
-          return location.replace("hub-admin.herokuapp.com", "hub-content-feed.herokuapp.com/hub-content-feed");
+          return location.replace("hub-admin.herokuapp.com/hub-admin", "hub-content-feed.herokuapp.com/hub-content-feed");
       }
   </script>
       
