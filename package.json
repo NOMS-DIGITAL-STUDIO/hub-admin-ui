@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-webapp-starter",
+  "name": "hub-admin-ui",
   "version": "1.0.0",
-  "description": "Starting point for a webapp with Node and Express",
+  "description": "UI for the Hub administrator",
   "main": "server.js",
   "engines": {
     "node": "6.9.4"
@@ -34,14 +34,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NOMS-DIGITAL-STUDIO/nodejs-webapp-starter.git"
+    "url": "git+https://github.com/NOMS-DIGITAL-STUDIO/hub-admin-ui.git"
   },
   "author": "NOMS Digital Studio",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/NOMS-DIGITAL-STUDIO/nodejs-webapp-starter/issues"
+    "url": "https://github.com/NOMS-DIGITAL-STUDIO/hub-admin-ui/issues"
   },
-  "homepage": "https://github.com/NOMS-DIGITAL-STUDIO/nodejs-webapp-starter#readme",
+  "homepage": "https://github.com/NOMS-DIGITAL-STUDIO/hub-admin-ui#readme",
   "devDependencies": {
     "gulp-spawn-mocha": "^3.1.0",
     "istanbul": "^0.4.5",
