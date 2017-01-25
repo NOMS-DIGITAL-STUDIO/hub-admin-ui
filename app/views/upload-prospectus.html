@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Upload - Prospectus
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  <form action="upload-complete" method="post" class="form">
+
+    <h1 class="form-title heading-large">
+      Upload a course prospectus
+    </h1>
+
+    <!-- Full name -->
+    <div class="form-group">
+      <label class="form-label-bold" for="full-name">Title</label>
+      <p class="form-hint">Obvious</p>
+      <input type="text" class="form-control" id="full-name">
+    </div>
+
+    <div class="form-group">
+      <input type="submit" class="button" value="Continue">
+    </div>
+
+  </form>
+
+</main>
+{% endblock %}

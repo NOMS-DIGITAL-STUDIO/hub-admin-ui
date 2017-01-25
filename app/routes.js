@@ -6,6 +6,14 @@ router.get('/', function (req, res) {
     res.render('index')
 });
 
+router.get('/upload-prospectus', function (req, res) {
+    res.render('upload-prospectus')
+});
+
+router.post('/upload-complete', function (req, res) {
+    res.render('upload-complete')
+});
+
 // add your routes here
 
 module.exports = router;
