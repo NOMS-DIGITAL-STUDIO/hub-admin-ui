@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+Hub Admin UI
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+    <div class="grid-row">
+        <div class="column-two-thirds">
+
+            <h1 class="heading-xlarge">
+                Error
+                <h2 class="heading-large">There was an error</h2>
+
+                <p>
+                {{error.status}} {{ message }}
+                </p>
+
+                <p class="code">
+                {{ error.stack }}
+                </p>
+
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+
+
