@@ -2,18 +2,27 @@ var path = require('path');
 var express = require('express');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
+var debug = require('debug')('hub-admin-ui');
+var logger = require('winston');
+
+var name = 'hub-admin-ui';
 
 var app = express();
 var routes = require('./app/routes.js');
 
+logger.level = process.env.LOG_LEVEL || 'info';
+
+debug('booting %s', name);
+logger.info('Starting service', {app: name});
+
 app.set('view engine', 'html');
 
-var appViews = [
+var views = [
     path.join(__dirname, '/app/views/'),
     path.join(__dirname, '/govuk_modules/govuk_template/layouts/')
 ];
 
-var nunjucksAppEnv = nunjucks.configure(appViews, {
+var nunjucksAppEnv = nunjucks.configure(views, {
     autoescape: true,
     express: app,
     noCache: true,
