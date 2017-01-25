@@ -18,6 +18,7 @@ gulp.task('generate-assets', function (done) {
     runSequence(
         'copy-govuk-modules',
         'sass',
+        'lint-client',
         'copy-assets', done)
 });
 
