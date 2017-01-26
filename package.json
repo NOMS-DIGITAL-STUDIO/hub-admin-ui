@@ -7,7 +7,8 @@
     "node": "6.9.4"
   },
   "scripts": {
-    "start": "gulp build && node ."
+    "start": "gulp build && node .",
+    "test": "mocha --recursive"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
@@ -40,5 +41,10 @@
   "bugs": {
     "url": "https://github.com/NOMS-DIGITAL-STUDIO/nodejs-webapp-starter/issues"
   },
-  "homepage": "https://github.com/NOMS-DIGITAL-STUDIO/nodejs-webapp-starter#readme"
+  "homepage": "https://github.com/NOMS-DIGITAL-STUDIO/nodejs-webapp-starter#readme",
+  "devDependencies": {
+    "gulp-mocha": "^3.0.1",
+    "mocha": "^3.2.0",
+    "should": "^11.1.2"
+  }
 }

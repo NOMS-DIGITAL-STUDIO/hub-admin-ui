@@ -11,7 +11,8 @@ gulp.task('default', function (done) {
 gulp.task('build', function (done) {
     runSequence(
         'clean',
-        'generate-assets', done)
+        'generate-assets',
+        'test', done)
 });
 
 gulp.task('generate-assets', function (done) {
@@ -25,7 +26,8 @@ gulp.task('generate-assets', function (done) {
 gulp.task('watch', function (done) {
     runSequence(
         'watch-sass',
-        'watch-assets', done)
+        'watch-assets',
+        'watch-tests', done)
 });
 
 

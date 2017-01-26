@@ -14,6 +14,4 @@ router.post('/upload-complete', function (req, res) {
     res.render('upload-complete')
 });
 
-// add your routes here
-
 module.exports = router;
