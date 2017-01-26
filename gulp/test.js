@@ -4,8 +4,9 @@ var mocha = require('gulp-spawn-mocha');
 gulp.task('test', function () {
     return gulp.src('test/**/*.js')
         .pipe(mocha({
+            reporter: 'list',
             istanbul: {
-                dir: 'build/test/coverage'
+                dir: 'build/reports/coverage'
             }
         }));
 });
