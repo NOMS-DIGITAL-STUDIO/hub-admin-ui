@@ -9,4 +9,5 @@ node_modules/*
 .tmuxp.*
 .idea
 npm-debug.log
+build/*
 

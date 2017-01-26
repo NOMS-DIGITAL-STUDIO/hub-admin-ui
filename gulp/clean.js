@@ -6,7 +6,8 @@ gulp.task('clean', function () {
         'public/*',
         'govuk_modules/*',
         '.port.tmp',
-        '*.log'
+        '*.log',
+        'build/*'
     ], {read: false})
         .pipe(clean())
 });
