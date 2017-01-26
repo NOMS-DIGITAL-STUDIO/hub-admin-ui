@@ -15,6 +15,7 @@
     "browser-sync": "^2.11.1",
     "debug": "^2.6.0",
     "express": "4.14.0",
+    "express-fileupload": "0.0.6",
     "govuk-elements-sass": "2.2.1",
     "govuk_frontend_toolkit": "5.0.3",
     "govuk_template_jinja": "0.19.2",
@@ -30,6 +31,7 @@
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2",
     "serve-favicon": "2.3.2",
+    "unirest": "^0.5.1",
     "winston": "^2.3.1"
   },
   "repository": {

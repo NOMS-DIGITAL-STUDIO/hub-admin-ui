@@ -1,7 +1,9 @@
 var path = require('path');
 var express = require('express');
+var fileUpload = require('express-fileupload');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
+
 var debug = require('debug')('hub-admin-ui');
 var logger = require('winston');
 
@@ -34,6 +36,8 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(fileUpload());
+
 app.use('/public', express.static(path.join(__dirname, '/public')));
 app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_template/assets')));
 app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_frontend_toolkit')));
@@ -46,19 +50,19 @@ app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+    var error = new Error('Not Found');
     err.status = 404;
-    next(err);
+    next(error);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(error, req, res, next) {
     // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.locals.message = error.message;
+    res.locals.error = req.app.get('env') === 'development' ? error : {};
 
     // render the error page
-    res.status(err.status || 500);
+    res.status(error.status || 500);
     res.render('error');
 });
 
