@@ -25,6 +25,7 @@
     "gulp-nodemon": "^2.1.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.0",
+    "gulp-spawn-mocha": "^3.1.0",
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.4",
     "nunjucks": "^3.0.0",
@@ -45,7 +46,6 @@
   },
   "homepage": "https://github.com/NOMS-DIGITAL-STUDIO/hub-admin-ui#readme",
   "devDependencies": {
-    "gulp-spawn-mocha": "^3.1.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "should": "^11.1.2"
