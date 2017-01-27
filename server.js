@@ -51,10 +51,6 @@ app.set('view engine', 'html');
 app.set('port', appConfig.port);
 
 
-// Express Routing Configuration
-app.use('/', routes.router);
-
-
 // View Engine Configuration
 var views = [
     path.join(__dirname, '/app/views/'),
@@ -73,6 +69,11 @@ var nunjucksAppEnv = nunjucks.configure(views, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(fileUpload());
+
+
+// Express Routing Configuration
+// NB Must be after fileupload, bodyparser config
+app.use('/', routes.router);
 
 
 //  Static Resources Configuration
