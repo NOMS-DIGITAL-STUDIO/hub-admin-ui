@@ -8,7 +8,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
         file.mv('./uploads/' + file.name, function (err) {
             if (err) {
-                logger.err('Failed to move file:', err)
+                logger.error('Failed to move file:', err)
             } else {
                 doUpload(title, file, callback);
             }
@@ -23,7 +23,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
             .attach('file', './uploads/' + file.name)
             .end(function (res) {
                 if (res.error) {
-                    logger.err('File upload error', res.error);
+                    logger.error('File upload error', res.error);
                     callback(res.error, null)
                 } else {
                     logger.info('File upload response', res.status);
