@@ -1,10 +1,21 @@
 var unirest = require('unirest');
+var fs = require('fs');
 
 module.exports = function HubAdminClient(appConfig, logger) {
 
     var upload = function (title, file, callback) {
 
-        logger.info('Uploading a file:', {'title': title, 'file name': file.name})
+        logger.info('Uploading a file:', {'title': title, 'file name': file.name});
+
+        logger.info('directories');
+        fs.readdir('.', function (err, items) {
+            console.log(items);
+
+            logger.info('uploads');
+            fs.readdir('./uploads', function (err, items) {
+                console.log(items);
+            });
+        });
 
         file.mv('./uploads/' + file.name, function (err) {
             if (err) {
