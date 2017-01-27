@@ -16,7 +16,10 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     router.post('/upload-complete', function (req, res) {
 
-        hubAdminClient.upload(req.body.title, req.files.file, function (error, status) {
+        var title = req.body.prospectusTitle;
+        var file = req.files.prospectusFile;
+
+        hubAdminClient.upload(title, file, function (error, status) {
             if (error === null) {
                 res.render('upload-complete', {status: status});
             } else {
