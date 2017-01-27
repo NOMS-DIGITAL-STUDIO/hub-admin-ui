@@ -1,33 +1,61 @@
-var path = require('path');
+// Dependencies
+var debug = require('debug')('hub-admin-ui');
+var bodyParser = require('body-parser');
 var express = require('express');
 var fileUpload = require('express-fileupload');
-var nunjucks = require('nunjucks');
-var bodyParser = require('body-parser');
-
-var debug = require('debug')('hub-admin-ui');
 var logger = require('winston');
+var nunjucks = require('nunjucks');
+var path = require('path');
 
-var name = 'hub-admin-ui';
 
-var app = express();
-
-logger.level = process.env.LOG_LEVEL || 'info';
-
+// Configuration
 var appConfig = {
-    'adminServerRoot': process.env.ADMIN_SERVER_ROOT || 'http://localhost:8080'
+    'adminServerRoot': process.env.ADMIN_SERVER_ROOT || 'http://localhost:8080',
+    'logLevel': process.env.LOG_LEVEL || 'info',
+    'name': 'hub-admin-ui',
+    'port': process.env.PORT || 3000,
+
 };
 
-var HubAdminClient = require('./server/hub-admin-client.js');
-var Routes = require('./app/routes.js');
 
+// Logger configuration
+logger.remove(logger.transports.Console)
+logger.add(logger.transports.Console, {
+    prettyPrint: true,
+    colorize: true,
+    silent: false,
+    timestamp: true
+    //json: true
+});
+
+
+// Startup
+debug('booting %s', appConfig.name);
+logger.info('Starting service', {app: appConfig.name});
+logger.info('Starting service with configuration:', appConfig);
+
+
+// Server Configuration
+logger.level = appConfig.logLevel;
+
+var HubAdminClient = require('./server/hub-admin-client.js');
 var hubAdminClient = new HubAdminClient(appConfig);
+
+var Routes = require('./app/routes.js');
 var routes = new Routes(hubAdminClient);
 
-debug('booting %s', name);
-logger.info('Starting service', {app: name});
 
+//  Express Configuration
+var app = express();
 app.set('view engine', 'html');
+app.set('port', appConfig.port);
 
+
+// Express Routing Configuration
+app.use('/', routes.router);
+
+
+// View Engine Configuration
 var views = [
     path.join(__dirname, '/app/views/'),
     path.join(__dirname, '/govuk_modules/govuk_template/layouts/')
@@ -40,44 +68,47 @@ var nunjucksAppEnv = nunjucks.configure(views, {
     watch: true
 });
 
-app.set('port', process.env.PORT || 3000);
 
+// Request Processing Configuration
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
 app.use(fileUpload());
 
+
+//  Static Resources Configuration
 app.use('/public', express.static(path.join(__dirname, '/public')));
 app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_template/assets')));
 app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_frontend_toolkit')));
 app.use('/public/images/icons', express.static(path.join(__dirname, '/govuk_modules/govuk_frontend_toolkit/images')));
 
-// Variable used in paths inside the govuk template files
+
+// GovUK Template Configuration
 app.locals.asset_path = '/public/';
 
-app.use('/', routes.router);
 
-// catch 404 and forward to error handler
+// Error Handler
 app.use(function (req, res, next) {
     var error = new Error('Not Found');
     err.status = 404;
     next(error);
 });
 
-// error handler
 app.use(function (error, req, res, next) {
-    // set locals, only providing error in development
     res.locals.message = error.message;
-    res.locals.error = req.app.get('env') === 'development' ? error : {};
+    res.locals.error = error;
 
-    // render the error page
     res.status(error.status || 500);
+
     res.render('error');
 });
 
+
+//  Server Startup
 app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 
+
+// Exports
 module.exports.app = app;
 module.exports.appConfig = appConfig;
