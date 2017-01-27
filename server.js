@@ -1,5 +1,4 @@
 // Dependencies
-var debug = require('debug')('hub-admin-ui');
 var bodyParser = require('body-parser');
 var express = require('express');
 var fileUpload = require('express-fileupload');
@@ -19,7 +18,7 @@ var appConfig = {
 
 
 // Logger configuration
-logger.remove(logger.transports.Console)
+logger.remove(logger.transports.Console);
 logger.add(logger.transports.Console, {
     prettyPrint: true,
     colorize: true,
@@ -30,7 +29,6 @@ logger.add(logger.transports.Console, {
 
 
 // Startup
-debug('booting %s', appConfig.name);
 logger.info('Starting service', {app: appConfig.name});
 logger.info('Starting service with configuration:', appConfig);
 
