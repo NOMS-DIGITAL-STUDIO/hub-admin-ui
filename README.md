@@ -6,13 +6,24 @@ National Offender Management Service.
 
 # Get Started
 
-Install the dependencies required to run the service and start the server in:
+1. Install the dependencies required to run the service:
 
   ```
   $ npm install
-  $ npm start
   ```  
-Visit [localhost:3000](http://localhost:3000/)
+2. Start the server
+
+  ```   
+  $ npm start
+  ```
+
+   Or, for development, run inspections, tests, watch for changes and start the server:
+   
+  ```   
+  $ gulp dev
+  ```
+3. Visit [localhost:3000](http://localhost:3000/)
+
 
 # Dev Guidance
 

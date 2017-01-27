@@ -7,8 +7,8 @@
     "node": "6.9.4"
   },
   "scripts": {
-    "start": "gulp build && node .",
-    "test": "gulp test"
+    "start": "gulp && node .",
+    "test": "gulp build test"
   },
   "dependencies": {
     "body-parser": "^1.14.1",

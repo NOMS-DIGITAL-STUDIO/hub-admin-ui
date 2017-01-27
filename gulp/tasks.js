@@ -4,6 +4,14 @@ var runSequence = require('run-sequence');
 gulp.task('default', function (done) {
     runSequence(
         'build',
+        'server', done)
+});
+
+gulp.task('dev', function (done) {
+    runSequence(
+        'build',
+        'lint-client',
+        'test',
         'watch',
         'server', done)
 });
@@ -11,15 +19,13 @@ gulp.task('default', function (done) {
 gulp.task('build', function (done) {
     runSequence(
         'clean',
-        'generate-assets',
-        'test', done)
+        'generate-assets',done)
 });
 
 gulp.task('generate-assets', function (done) {
     runSequence(
         'copy-govuk-modules',
         'sass',
-        'lint-client',
         'copy-assets', done)
 });
 
