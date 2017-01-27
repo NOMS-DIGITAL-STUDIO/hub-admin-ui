@@ -1,13 +1,14 @@
 var unirest = require('unirest');
 
-module.exports = function HubAdminClient(appConfig) {
+module.exports = function HubAdminClient(appConfig, logger) {
 
     var upload = function (title, file, callback) {
 
+        logger.info('Uploading a file:', {'title': title, 'file name': file.name})
+
         file.mv('./uploads/' + file.name, function (err) {
             if (err) {
-                console.log('move error');
-                console.log(err);
+                logger.err('Failed to move file:', err)
             } else {
                 doUpload(title, file, callback);
             }
@@ -22,10 +23,10 @@ module.exports = function HubAdminClient(appConfig) {
             .attach('file', './uploads/' + file.name)
             .end(function (res) {
                 if (res.error) {
-                    console.log('File upload error', res.error);
+                    logger.err('File upload error', res.error);
                     callback(res.error, null)
                 } else {
-                    console.log('File upload response', res.status);
+                    logger.info('File upload response', res.status);
                     callback(null, res.status)
                 }
             });

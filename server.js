@@ -39,10 +39,10 @@ logger.info('Starting service with configuration:', appConfig);
 logger.level = appConfig.logLevel;
 
 var HubAdminClient = require('./server/hub-admin-client.js');
-var hubAdminClient = new HubAdminClient(appConfig);
+var hubAdminClient = new HubAdminClient(appConfig, logger);
 
 var Routes = require('./app/routes.js');
-var routes = new Routes(hubAdminClient);
+var routes = new Routes(hubAdminClient, logger);
 
 
 //  Express Configuration

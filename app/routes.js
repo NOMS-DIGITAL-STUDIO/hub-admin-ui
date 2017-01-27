@@ -1,6 +1,6 @@
 var express = require('express');
 
-module.exports = function Routes(hubAdminClient) {
+module.exports = function Routes(hubAdminClient, logger) {
 
     var router = express.Router();
 
@@ -16,13 +16,11 @@ module.exports = function Routes(hubAdminClient) {
 
     router.post('/upload-complete', function (req, res) {
 
-        console.log(req.files);
-
         hubAdminClient.upload(req.body.title, req.files.file, function (error, status) {
             if (error === null) {
-                console.log("result", status);
                 res.render('upload-complete', {status: status});
             } else {
+                logger.err('File upload error:', err)
                 res.locals.message = error.message;
                 res.status(error.status || 500);
                 res.locals.error = req.app.get('env') === 'development' ? error : {};
