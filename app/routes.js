@@ -20,7 +20,7 @@ module.exports = function Routes(hubAdminClient, logger) {
             if (error === null) {
                 res.render('upload-complete', {status: status});
             } else {
-                logger.err('File upload error:', err)
+                logger.err('File upload error:', error);
                 res.locals.message = error.message;
                 res.status(error.status || 500);
                 res.locals.error = req.app.get('env') === 'development' ? error : {};
