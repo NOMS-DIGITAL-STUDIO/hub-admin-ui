@@ -1,6 +1,8 @@
 // /api integration routes eg for AJAX calls
+'use strict';
 
 var express = require('express');
+var moment = require('moment');
 
 module.exports = function Routes(hubAdminClient, logger) {
 
@@ -21,7 +23,13 @@ module.exports = function Routes(hubAdminClient, logger) {
                 // res.send(JSON.stringify(result));
                 // res.send('stuff');
 
-                res.send(status);
+                var resultJson = {
+                    'filename': file.name,
+                    'title': title,
+                    'timestamp': moment().format('LLL')
+                };
+
+                res.status(status).send(resultJson);
 
             } else {
                 logger.error('File upload error:', error);

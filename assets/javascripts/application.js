@@ -25,12 +25,12 @@ $(document).ready(function () {
 
     $('form').ajaxForm(function (data, status, ajaxObject) {
 
-        //  alert('data: ' + data);
         //  alert('status: ' + status);
         //  alert('ajaxObject: ' + ajaxObject);
 
         if (ajaxObject.status === 201) {
             $('#uploadSuccess').show();
+            $('#uploadSuccessNotes').html(data.filename + " - '" + data.title + "' - uploaded at " + data.timestamp).show();
         } else {
             $('#uploadFailure').show();
         }
