@@ -16,3 +16,12 @@ h4.success {
         margin-bottom: 0px
     }
 }
+
+h4.failure {
+    color: #b10e1e;
+    font-weight: bold;
+    margin-top: 10px;
+    p {
+        margin-bottom: 0px
+    }
+}

@@ -17,6 +17,37 @@ $(document).ready(function () {
     // to toggle hidden content
     var showHideContent = new GOVUK.ShowHideContent();
     showHideContent.init();
+
+
+    // Reset Dynamic display elements
+    $('#uploadSuccess').hide();
+    $('#uploadFailure').hide();
+
+    $('form').ajaxForm(function (data, status, ajaxObject) {
+
+        //  alert('data: ' + data);
+        //  alert('status: ' + status);
+        //  alert('ajaxObject: ' + ajaxObject);
+
+        if (ajaxObject.status === 201) {
+            $('#uploadSuccess').show();
+        } else {
+            $('#uploadFailure').show();
+        }
+
+        $('form').resetForm();
+    });
 });
 
 
+// todo handle form post manually
+// $(function () {
+//     $('#upload').on('click', function () {
+//
+//         //alert('pressed upload');
+//
+//         // Execute POST to /api/upload
+//
+//         // Handle response
+//     });
+// });

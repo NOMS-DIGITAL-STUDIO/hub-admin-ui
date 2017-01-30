@@ -13,8 +13,16 @@ module.exports = function Routes(hubAdminClient, logger) {
 
         hubAdminClient.upload(title, file, function (error, status) {
             if (error === null) {
-            logger.info('upload successful');
-                res.render('index');
+                logger.info('upload successful');
+
+                // res.render('index');
+
+                // res.json(result);
+                // res.send(JSON.stringify(result));
+                // res.send('stuff');
+
+                res.send(status);
+
             } else {
                 logger.error('File upload error:', error);
                 res.locals.message = error.message;
