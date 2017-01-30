@@ -4,7 +4,7 @@
 var express = require('express');
 var moment = require('moment');
 
-module.exports = function Routes(hubAdminClient, logger) {
+module.exports = function ApiRoutes(hubAdminClient, logger) {
 
     var router = express.Router();
 
@@ -16,12 +16,6 @@ module.exports = function Routes(hubAdminClient, logger) {
         hubAdminClient.upload(title, file, function (error, status) {
             if (error === null) {
                 logger.info('upload successful');
-
-                // res.render('index');
-
-                // res.json(result);
-                // res.send(JSON.stringify(result));
-                // res.send('stuff');
 
                 var resultJson = {
                     'filename': file.name,

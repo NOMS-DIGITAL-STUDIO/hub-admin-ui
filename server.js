@@ -91,7 +91,7 @@ app.locals.asset_path = '/public/';
 // Error Handler
 app.use(function (req, res, next) {
     var error = new Error('Not Found');
-    err.status = 404;
+    error.status = 404;
     next(error);
 });
 
@@ -106,11 +106,11 @@ app.use(function (error, req, res, next) {
 
 
 //  Server Startup
-app.listen(app.get('port'), function () {
+var server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 
 
 // Exports
-module.exports.app = app;
+module.exports.server = server;
 module.exports.appConfig = appConfig;

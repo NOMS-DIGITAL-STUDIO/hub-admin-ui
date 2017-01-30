@@ -19,6 +19,10 @@ $(document).ready(function () {
     showHideContent.init();
 
 
+
+    // todo extract following to a module
+    // todo build client JS from server via browserify to allow require etc
+
     // Reset Dynamic display elements
     $('#uploadSuccess').hide();
     $('#uploadFailure').hide();
@@ -40,14 +44,6 @@ $(document).ready(function () {
 });
 
 
-// todo handle form post manually
-// $(function () {
-//     $('#upload').on('click', function () {
-//
-//         //alert('pressed upload');
-//
-//         // Execute POST to /api/upload
-//
-//         // Handle response
-//     });
-// });
+
+
+
