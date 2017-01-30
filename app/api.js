@@ -11,15 +11,17 @@ module.exports = function ApiRoutes(hubAdminClient, logger) {
     router.post('/upload', function (req, res) {
 
         var title = req.body.prospectusTitle;
+        var category = req.body.prospectusSubject;
         var file = req.files.prospectusFile;
 
-        hubAdminClient.upload(title, file, function (error, status) {
+        hubAdminClient.upload(title, category, file, function (error, status) {
             if (error === null) {
                 logger.info('upload successful');
 
                 var resultJson = {
                     'filename': file.name,
                     'title': title,
+                    'category': category,
                     'timestamp': moment().format('LLL')
                 };
 

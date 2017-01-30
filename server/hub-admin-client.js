@@ -3,9 +3,9 @@ var fs = require('fs');
 
 module.exports = function HubAdminClient(appConfig, logger) {
 
-    var upload = function (title, file, callback) {
+    var upload = function (title, category, file, callback) {
 
-        logger.info('Uploading a file:', {'title': title, 'file name': file.name});
+        logger.info('Uploading a file:', {'title': title, 'category': category, 'file name': file.name});
 
         logger.debug('Contents of uploads folder:');
         fs.readdir('./uploads', function (err, items) {
@@ -16,16 +16,17 @@ module.exports = function HubAdminClient(appConfig, logger) {
             if (err) {
                 logger.error('Failed to move file:', err)
             } else {
-                doUpload(title, file, callback);
+                doUpload(title, category, file, callback);
             }
         });
     };
 
-    var doUpload = function (title, file, callback) {
+    var doUpload = function (title, category, file, callback) {
 
         unirest.post(appConfig.adminServerRoot + '/hub-admin/content-items')
             .headers({'Content-Type': 'multipart/form-data'})
             .field('title', title)
+            .field('category', category)
             .attach('file', './uploads/' + file.name)
             .end(function (res) {
                 if (res.error) {
