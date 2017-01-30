@@ -40,8 +40,10 @@ var HubAdminClient = require('./server/hub-admin-client.js');
 var hubAdminClient = new HubAdminClient(appConfig, logger);
 
 var Routes = require('./app/routes.js');
-var routes = new Routes(hubAdminClient, logger);
+var routes = new Routes(logger);
 
+var ApiRoutes = require('./app/api.js');
+var apiRoutes = new ApiRoutes(hubAdminClient, logger);
 
 //  Express Configuration
 var app = express();
@@ -72,6 +74,7 @@ app.use(fileUpload());
 // Express Routing Configuration
 // NB Must be after fileupload, bodyparser config
 app.use('/', routes.router);
+app.use('/api', apiRoutes.router);
 
 
 //  Static Resources Configuration
