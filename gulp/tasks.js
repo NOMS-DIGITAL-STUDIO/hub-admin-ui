@@ -10,7 +10,7 @@ gulp.task('default', function (done) {
 gulp.task('dev', function (done) {
     runSequence(
         'build',
-        'lint-client',
+        'lint-all',
         'test',
         'watch',
         'server', done)
@@ -36,6 +36,11 @@ gulp.task('watch', function (done) {
         'watch-tests', done)
 });
 
+gulp.task('lint-all', function (done) {
+    runSequence(
+        'lint-client',
+        'lint-server', done)
+});
 
 
 

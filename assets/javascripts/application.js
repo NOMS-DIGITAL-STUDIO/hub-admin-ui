@@ -1,8 +1,9 @@
 /* global $ */
 /* global GOVUK */
 
-
 $(document).ready(function () {
+/* jshint ignore:start */
+
     // Use GOV.UK selection-buttons.js to set selected
     // and focused states for block labels
     var $blockLabels = $(".block-label input[type='radio'], .block-label input[type='checkbox']");
@@ -17,7 +18,7 @@ $(document).ready(function () {
     // to toggle hidden content
     var showHideContent = new GOVUK.ShowHideContent();
     showHideContent.init();
-
+/* jshint ignore:end */
 
 
     // todo extract following to a module
@@ -34,7 +35,7 @@ $(document).ready(function () {
 
         if (ajaxObject.status === 201) {
             $('#uploadSuccess').show();
-            $('#uploadSuccessNotes').html(data.filename + " - '" + data.title + "' - uploaded at " + data.timestamp).show();
+            $('#uploadSuccessNotes').html(data.filename + ' - ' + data.title + ' - uploaded at ' + data.timestamp).show();
         } else {
             $('#uploadFailure').show();
         }

@@ -3,9 +3,11 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var fileUpload = require('express-fileupload');
 var logger = require('winston');
-var nunjucks = require('nunjucks');
 var path = require('path');
 
+/* jshint ignore:start */
+var nunjucks = require('nunjucks');
+/* jshint ignore:end */
 
 // Configuration
 var appConfig = {
@@ -52,18 +54,22 @@ app.set('port', appConfig.port);
 
 
 // View Engine Configuration
+/* jshint ignore:start */
 var views = [
     path.join(__dirname, '/app/views/'),
     path.join(__dirname, '/govuk_modules/govuk_template/layouts/')
 ];
+/* jshint ignore:end */
 
+
+/* jshint ignore:start */
 var nunjucksAppEnv = nunjucks.configure(views, {
     autoescape: true,
     express: app,
     noCache: true,
     watch: true
 });
-
+/* jshint ignore:end */
 
 // Request Processing Configuration
 app.use(bodyParser.json());
@@ -85,8 +91,9 @@ app.use('/public/images/icons', express.static(path.join(__dirname, '/govuk_modu
 
 
 // GovUK Template Configuration
+/* jshint ignore:start */
 app.locals.asset_path = '/public/';
-
+/* jshint ignore:end */
 
 // Error Handler
 app.use(function (req, res, next) {
