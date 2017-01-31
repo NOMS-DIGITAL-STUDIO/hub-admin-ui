@@ -1,3 +1,8 @@
+test:
+  post:
+    - mkdir $CIRCLE_ARTIFACTS/test-coverage-html
+    - mv build/reports/coverage/lcov-report/** $CIRCLE_ARTIFACTS/test-coverage-html
+
 deployment:
   dev:
     branch: master
