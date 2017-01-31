@@ -5,7 +5,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
     var upload = function (title, category, file, callback) {
 
-        logger.info('Uploading a file:', {'title': title, 'category': category, 'file name': file.name});
+        logger.info('Uploading a file:', {'title': title, 'category': category, 'filename': file.name});
 
         logger.debug('Contents of uploads folder:');
         fs.readdir('./uploads', function (err, items) {
