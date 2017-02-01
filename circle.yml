@@ -1,6 +1,6 @@
 test:
   override:
-    - mocha test --reporter mocha-junit-reporter
+    - gulp testreport
   post:
     - mkdir $CIRCLE_ARTIFACTS/test-coverage-html
     - mv build/reports/coverage/lcov-report/** $CIRCLE_ARTIFACTS/test-coverage-html

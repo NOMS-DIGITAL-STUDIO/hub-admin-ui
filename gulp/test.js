@@ -11,3 +11,13 @@ gulp.task('test', function () {
             }
         }));
 });
+
+gulp.task('testreport', function () {
+    return gulp.src('test/**/*.js')
+        .pipe(mocha({
+            reporter: 'mocha-junit-reporter',
+            istanbul: {
+                dir: 'build/reports/coverage'
+            }
+        }));
+});
