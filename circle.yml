@@ -2,7 +2,7 @@ test:
   override:
     - gulp unittestreport
   post:
-    - mv test-results.xml $CIRCLE_TEST_REPORTS/test-results.xml
+    - find . -type f -regex "test-results.xml" -exec cp {} $CIRCLE_TEST_REPORTS/ \;
     - mkdir $CIRCLE_ARTIFACTS/test-coverage-html
     - mv build/reports/coverage/lcov-report/** $CIRCLE_ARTIFACTS/test-coverage-html
 
