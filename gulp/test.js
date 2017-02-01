@@ -3,7 +3,7 @@ var mocha = require('gulp-spawn-mocha');
 var fs = require('fs');
 
 gulp.task('test', function () {
-    return gulp.src('test/**/*.js')
+    return gulp.src(['test/**/*.js'])
         .pipe(mocha({
             reporter: 'list',
             istanbul: {
@@ -12,8 +12,8 @@ gulp.task('test', function () {
         }));
 });
 
-gulp.task('testreport', function () {
-    return gulp.src('test/**/*.js')
+gulp.task('unittestreport', function () {
+    return gulp.src(['!test/integration/**', '!test/functional/**','test/**/*.js'])
         .pipe(mocha({
             reporter: 'mocha-junit-reporter',
             istanbul: {

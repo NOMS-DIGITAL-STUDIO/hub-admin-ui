@@ -1,6 +1,6 @@
 test:
   override:
-    - gulp testreport
+    - gulp unittestreport
   post:
     - mv test-results.xml $CIRCLE_TEST_REPORTS/test-results.xml
     - mkdir $CIRCLE_ARTIFACTS/test-coverage-html
