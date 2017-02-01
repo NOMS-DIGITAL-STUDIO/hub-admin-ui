@@ -8,7 +8,8 @@ gulp.task('clean', function () {
         '.port.tmp',
         '*.log',
         'build/*',
-        'uploads/*'
+        'uploads/*',
+        'test-results.xml'
     ], {read: false})
         .pipe(clean())
 });

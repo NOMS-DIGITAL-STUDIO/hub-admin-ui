@@ -13,7 +13,7 @@ gulp.task('test', function () {
 });
 
 gulp.task('unittestreport', function () {
-    return gulp.src(['!test/integration/**', '!test/functional/**','test/**/*.js'])
+    return gulp.src(['test/**/*.js'])
         .pipe(mocha({
             reporter: 'mocha-junit-reporter',
             istanbul: {
