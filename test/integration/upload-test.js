@@ -4,7 +4,7 @@ var request = require('supertest');
 var nock = require('nock');
 var moment = require('moment');
 
-describe('Server route config: ', function () {
+describe('Upload routes: ', function () {
 
     var server;
 
@@ -57,6 +57,25 @@ describe('Server route config: ', function () {
                 res.status.should.equal(201);
 
                 moment(res.body.timestamp).isSameOrAfter(start).should.be.true();
+
+                done();
+            });
+    });
+
+    it('propagates response status received from hub-admin rest', function testUpload(done) {
+
+        var hubAdmin = nock('http://localhost:8080')
+            .post('/hub-admin/content-items')
+            .reply(400);
+
+        request(server)
+            .post('/api/upload')
+            .field('prospectusTitle', 'aTitle')
+            .field('prospectusSubject', 'aSubject')
+            .attach('prospectusFile', 'test/resources/sample.txt')
+            .end(function (err, res) {
+
+                res.status.should.equal(400);
 
                 done();
             });
