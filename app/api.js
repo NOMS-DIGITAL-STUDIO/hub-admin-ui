@@ -22,7 +22,7 @@ module.exports = function ApiRoutes(hubAdminClient, logger) {
                     'filename': file.name,
                     'title': title,
                     'category': category,
-                    'timestamp': moment().format('LLL')
+                    'timestamp': moment().format('YYYY-MM-DD HH:mm')
                 };
 
                 res.status(status).send(resultJson);
