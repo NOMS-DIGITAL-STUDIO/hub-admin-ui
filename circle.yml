@@ -1,7 +1,10 @@
 test:
+  override:
+    - mocha test --reporter mocha-junit-reporter
   post:
     - mkdir $CIRCLE_ARTIFACTS/test-coverage-html
     - mv build/reports/coverage/lcov-report/** $CIRCLE_ARTIFACTS/test-coverage-html
+    - mv test-results.xml $CIRCLE_TEST_REPORTS/junit/test-results.xml
 
 deployment:
   dev:
