@@ -4,7 +4,7 @@ test:
   post:
     - mv test-results.xml $CIRCLE_TEST_REPORTS/test-results.xml
     - mkdir $CIRCLE_ARTIFACTS/test-coverage-html
-    - find . -type f -regex "build/reports/coverage/lcov-report/**" -exec cp {} $CIRCLE_ARTIFACTS/test-coverage-html \;
+    - mv build/reports/coverage/lcov-report/** $CIRCLE_ARTIFACTS/test-coverage-html
 
 deployment:
   dev:
