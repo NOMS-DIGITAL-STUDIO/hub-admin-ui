@@ -5,7 +5,7 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     var router = express.Router();
 
-    function getContentItems(next) {
+    function getContentItems(req, res, next) {
         hubAdminClient.list(function (error, jsonData) {
             if (error === null) {
                 logger.info('get list successful');
@@ -21,16 +21,14 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
     }
 
-    router.get('/', function (req, res) {
-        getContentItems(function (jsonData) {
-            res.render('index', {
-                'contentItems': jsonData.contentItems
-            });
+    function list (req, res, next) {
+        getContentItems(req, res, function (jsonData) {
+            req.contentItems = jsonData.contentItems;
+            return next();
         });
-    });
+    }
 
-    router.post('/', function (req, res) {
-
+    function upload (req, res, next) {
         var title = req.body.prospectusTitle;
         var category = req.body.prospectusSubject;
         var file = req.files.prospectusFile;
@@ -39,7 +37,7 @@ module.exports = function Routes(hubAdminClient, logger) {
             if (error === null) {
                 logger.info('upload successful');
 
-                var resultJson = {
+                req.resultJson = {
                     'success': true,
                     'filename': file.name,
                     'title': title,
@@ -47,12 +45,7 @@ module.exports = function Routes(hubAdminClient, logger) {
                     'timestamp': moment().format('YYYY-MM-DD HH:mm')
                 };
 
-                getContentItems(function (jsonData) {
-                    res.status(status).render('index', {
-                        'uploadDetails': resultJson,
-                        'contentItems': jsonData.contentItems
-                    });
-                });
+                return next();
 
             } else {
                 logger.error('File upload error:', error);
@@ -62,9 +55,17 @@ module.exports = function Routes(hubAdminClient, logger) {
                 res.render('error');
             }
         });
+    }
 
-    });
+    function display (req, res) {
+        res.status(200).render('index', {
+            'uploadDetails': req.resultJson,
+            'contentItems': req.contentItems
+        });
+    }
 
+    router.get('/', [list, display]);
+    router.post('/', [upload, list, display]);
 
     return {
         router: router

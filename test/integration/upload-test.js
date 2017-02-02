@@ -33,9 +33,9 @@ describe('Upload routes: ', function () {
             .attach('prospectusFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
-                res.status.should.equal(201);
+                res.status.should.equal(200);
 
-                // res.body.filename.should.equal('sample.txt');
+                // res.body.filename.should.equal('samplde.txt');
                 // res.body.title.should.equal('aTitle');
                 // res.body.category.should.equal('aSubject');
 
@@ -45,7 +45,7 @@ describe('Upload routes: ', function () {
 
     it('upload response includes a timestamp', function testUpload(done) {
 
-        var start = moment({second :0, millisecond :0});
+        var start = moment({second: 0, millisecond: 0});
 
         var hubAdmin = nock('http://localhost:8080')
             .post('/hub-admin/content-items')
@@ -58,12 +58,13 @@ describe('Upload routes: ', function () {
             .attach('prospectusFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
-                res.status.should.equal(201);
+                res.status.should.equal(200);
 
                 moment(res.body.timestamp).isSameOrAfter(start).should.be.true();
 
                 done();
             });
+
     });
 
     it('propagates response status received from hub-admin rest', function testUpload(done) {

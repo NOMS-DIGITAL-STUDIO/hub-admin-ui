@@ -41,8 +41,6 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
     var getAllContentItems = function(next){
 
-        logger.debug('getting content items');
-
         unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
             .end(function(response) {
                 if (response.error) {
