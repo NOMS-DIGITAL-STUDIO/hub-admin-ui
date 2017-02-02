@@ -41,10 +41,17 @@ $(document).ready(function () {
         }
 
         $('form').resetForm();
+        listItems();
     });
 });
 
+$( window ).on( "load", function() {
+    //alert( "window loaded" );
+    listItems();
+});
 
-
+listItems = function(){
+    //alert('list function');
+};
 
 

@@ -42,7 +42,7 @@ var HubAdminClient = require('./server/hub-admin-client.js');
 var hubAdminClient = new HubAdminClient(appConfig, logger);
 
 var Routes = require('./app/routes.js');
-var routes = new Routes(logger);
+var routes = new Routes(hubAdminClient, logger);
 
 var ApiRoutes = require('./app/api.js');
 var apiRoutes = new ApiRoutes(hubAdminClient, logger);

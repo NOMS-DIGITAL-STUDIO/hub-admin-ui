@@ -73,6 +73,39 @@ Upload - Prospectus
                 </div>
 
             </form>
+
+        </div>
+        <div class="column-full">
+            <h3 class="heading-medium">
+                Previously uploaded Prospectuses
+            </h3>
+
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">Prospectus title</th>
+                    <th class="numeric" scope="col">Subject</th>
+                    <th class="numeric" scope="col">File name</th>
+                </tr>
+                </thead>
+                <tbody>
+
+            {% for item in contentItems %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td class="numeric">{{ item.category }}</td>
+                    <td class="numeric">{{ item.filename }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>There are no results found.</td>
+                </tr>
+            {% endfor %}
+
+                </tbody>
+            </table>
+
+
         </div>
     </div>
 
