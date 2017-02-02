@@ -23,11 +23,13 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     router.get('/', function (req, res) {
         getContentItems(function (jsonData) {
-            res.render('index', {'contentItems': jsonData.contentItems});
+            res.render('index', {
+                'contentItems': jsonData.contentItems
+            });
         });
     });
 
-    router.post('/upload', function (req, res) {
+    router.post('/', function (req, res) {
 
         var title = req.body.prospectusTitle;
         var category = req.body.prospectusSubject;
@@ -51,7 +53,6 @@ module.exports = function Routes(hubAdminClient, logger) {
                         'contentItems': jsonData.contentItems
                     });
                 });
-
 
             } else {
                 logger.error('File upload error:', error);

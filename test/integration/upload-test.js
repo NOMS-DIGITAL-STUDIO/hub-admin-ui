@@ -27,7 +27,7 @@ describe('Upload routes: ', function () {
             .reply(201);
 
         request(server)
-            .post('/upload')
+            .post('/')
             .field('prospectusTitle', 'aTitle')
             .field('prospectusSubject', 'aSubject')
             .attach('prospectusFile', 'test/resources/sample.txt')
@@ -52,7 +52,7 @@ describe('Upload routes: ', function () {
             .reply(201);
 
         request(server)
-            .post('/upload')
+            .post('/')
             .field('prospectusTitle', 'aTitle')
             .field('prospectusSubject', 'aSubject')
             .attach('prospectusFile', 'test/resources/sample.txt')
@@ -73,7 +73,7 @@ describe('Upload routes: ', function () {
             .reply(400);
 
         request(server)
-            .post('/upload')
+            .post('/')
             .field('prospectusTitle', 'aTitle')
             .field('prospectusSubject', 'aSubject')
             .attach('prospectusFile', 'test/resources/sample.txt')
