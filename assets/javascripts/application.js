@@ -20,38 +20,6 @@ $(document).ready(function () {
     showHideContent.init();
 /* jshint ignore:end */
 
-
-    // todo extract following to a module
-    // todo build client JS from server via browserify to allow require etc
-
-    // Reset Dynamic display elements
-    $('#uploadSuccess').hide();
-    $('#uploadFailure').hide();
-
-    $('form').ajaxForm(function (data, status, ajaxObject) {
-
-        //  alert('status: ' + status);
-        //  alert('ajaxObject: ' + ajaxObject);
-
-        if (ajaxObject.status === 201) {
-            $('#uploadSuccess').show();
-            $('#uploadSuccessNotes').html(data.filename + ' - ' + data.title + ' - uploaded at ' + data.timestamp).show();
-        } else {
-            $('#uploadFailure').show();
-        }
-
-        $('form').resetForm();
-        listItems();
-    });
 });
-
-$( window ).on( "load", function() {
-    //alert( "window loaded" );
-    listItems();
-});
-
-listItems = function(){
-    //alert('list function');
-};
 
 

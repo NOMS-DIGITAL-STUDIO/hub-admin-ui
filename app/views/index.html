@@ -26,7 +26,7 @@ Upload - Prospectus
             </div>
 
 
-            <form action="api/upload" method="post" class="form" enctype="multipart/form-data">
+            <form action="upload" method="post" class="form" enctype="multipart/form-data">
 
                 <h3 class="heading-medium">Prospectus</h3>
 
@@ -67,9 +67,11 @@ Upload - Prospectus
 
                 <div class="form-group">
                     <input class="button" type="submit" value="Save" id="upload">
+
+                  {% if uploadDetails.success %}
                     <h4 id="uploadSuccess" class="success">Saved successfully</h4>
-                    <p id="uploadSuccessNotes" class="font-xsmall"></p>
-                    <h4 id="uploadFailure" class="error failure">Failed</h4>
+                    <p id="uploadSuccessNotes" class="font-xsmall">{{ uploadDetails.filename + ' - ' + uploadDetails.title + ' - uploaded at ' + uploadDetails.timestamp }}</p>
+                  {% endif %}
                 </div>
 
             </form>
