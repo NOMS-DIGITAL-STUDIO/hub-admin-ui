@@ -23,7 +23,7 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     function list (req, res, next) {
         getContentItems(req, res, function (jsonData) {
-            req.contentItems = jsonData.contentItems;
+            res.contentItems = jsonData.contentItems;
             return next();
         });
     }
@@ -37,7 +37,7 @@ module.exports = function Routes(hubAdminClient, logger) {
             if (error === null) {
                 logger.info('upload successful');
 
-                req.resultJson = {
+                res.resultJson = {
                     'success': true,
                     'filename': file.name,
                     'title': title,
@@ -59,8 +59,8 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     function display (req, res) {
         res.status(200).render('index', {
-            'uploadDetails': req.resultJson,
-            'contentItems': req.contentItems
+            'uploadDetails': res.resultJson,
+            'contentItems': res.contentItems
         });
     }
 
@@ -68,7 +68,10 @@ module.exports = function Routes(hubAdminClient, logger) {
     router.post('/', [upload, list, display]);
 
     return {
-        router: router
+        router: router,
+        list: list,
+        upload: upload,
+        display: display
     };
 
 };

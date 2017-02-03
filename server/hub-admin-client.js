@@ -21,6 +21,8 @@ module.exports = function HubAdminClient(appConfig, logger) {
             });
     };
 
+    // todo structure this to make it testable without 'file'
+    // todo stream the file data instead of temporary storage
     var upload = function (title, category, file, next) {
 
         logger.info('Uploading a file:', {'title': title, 'category': category, 'filename': file.name});
