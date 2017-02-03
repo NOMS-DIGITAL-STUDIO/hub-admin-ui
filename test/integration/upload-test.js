@@ -1,5 +1,5 @@
-var assert = require('assert');
-var should = require('should');
+var assert = require('chai').assert;
+var expect = require('chai').expect;
 var request = require('supertest');
 var nock = require('nock');
 var moment = require('moment');
@@ -33,8 +33,9 @@ describe('Upload routes: ', function () {
             .attach('prospectusFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
-                res.status.should.equal(200);
+                expect(res.status).to.equal(200);
 
+                // todo how to intercept Express res/req in a test
                 // res.body.filename.should.equal('samplde.txt');
                 // res.body.title.should.equal('aTitle');
                 // res.body.category.should.equal('aSubject');
@@ -58,9 +59,10 @@ describe('Upload routes: ', function () {
             .attach('prospectusFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
-                res.status.should.equal(200);
+                expect(res.status).to.equal(200);
 
-                moment(res.body.timestamp).isSameOrAfter(start).should.be.true();
+                var isSameOrAfter = moment(res.body.timestamp).isSameOrAfter(start);
+                expect(isSameOrAfter).to.be.true;
 
                 done();
             });
@@ -80,7 +82,7 @@ describe('Upload routes: ', function () {
             .attach('prospectusFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
-                res.status.should.equal(400);
+                expect(res.status).to.equal(400);
 
                 done();
             });

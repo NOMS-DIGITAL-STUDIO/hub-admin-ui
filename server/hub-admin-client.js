@@ -3,7 +3,7 @@ var fs = require('fs');
 
 module.exports = function HubAdminClient(appConfig, logger) {
 
-    var doUpload = function (title, category, file, next) {
+    var uploadToAdminService = function (title, category, file, next) {
 
         unirest.post(appConfig.adminServerRoot + '/hub-admin/content-items')
             .headers({'Content-Type': 'multipart/form-data'})
@@ -34,7 +34,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
             if (error) {
                 logger.error('Failed to move file:', error);
             } else {
-                doUpload(title, category, file, next);
+                uploadToAdminService(title, category, file, next);
             }
         });
     };
