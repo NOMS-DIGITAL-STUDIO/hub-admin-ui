@@ -98,14 +98,22 @@ app.use(function (req, res, next) {
     next(error);
 });
 
-app.use(function (error, req, res, next) {
+app.use(logErrors);
+app.use(clientErrors);
+
+function logErrors (err, req, res, next) {
+    logger.error('Unhandled error: ' + err.stack);
+    next(err);
+}
+
+function clientErrors (error, req, res, next) {
     res.locals.message = error.message;
     res.locals.error = error;
 
     res.status(error.status || 500);
 
     res.render('error');
-});
+}
 
 
 //  Server Startup

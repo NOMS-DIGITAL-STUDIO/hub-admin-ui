@@ -13,10 +13,7 @@ module.exports = function Routes(hubAdminClient, logger) {
                 next(jsonData);
             } else {
                 logger.error('Get list error: ' + error);
-                res.locals.message = error.message;
-                res.status(error.status || 500);
-                res.locals.error = req.app.get('env') === 'development' ? error : {};
-                res.render('error');
+                next(error);
             }
         });
     }
@@ -49,10 +46,7 @@ module.exports = function Routes(hubAdminClient, logger) {
 
             } else {
                 logger.error('File upload error: ' + error);
-                res.locals.message = error.message;
-                res.status(error.status || 500);
-                res.locals.error = req.app.get('env') === 'development' ? error : {};
-                res.render('error');
+                next(error);
             }
         });
     }
