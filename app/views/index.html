@@ -82,9 +82,9 @@ Upload - Prospectus
                 Previously uploaded Prospectuses
             </h3>
 
-            <table>
+            <table id="contentItemsTable">
                 <thead>
-                <tr>
+                <tr id="contentItemsTableHeader">
                     <th scope="col">Prospectus title</th>
                     <th class="numeric" scope="col">Subject</th>
                     <th class="numeric" scope="col">File name</th>
@@ -93,7 +93,7 @@ Upload - Prospectus
                 <tbody>
 
             {% for item in contentItems %}
-                <tr>
+                <tr id="contentItem{{ loop.index0 }}">
                     <td>{{ item.title }}</td>
                     <td class="numeric">{{ item.category }}</td>
                     <td class="numeric">{{ item.filename }}</td>
