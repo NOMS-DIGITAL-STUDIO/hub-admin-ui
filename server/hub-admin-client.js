@@ -12,10 +12,10 @@ module.exports = function HubAdminClient(appConfig, logger) {
             .attach('file', './uploads/' + file.name)
             .end(function (response) {
                 if (response.error) {
-                    logger.error('File upload error', response.error);
+                    logger.error('File upload error ' + response.error);
                     next(response.error, null);
                 } else {
-                    logger.info('File upload response', response.status);
+                    logger.info('File upload response ' + response.status);
                     next(null, response.status);
                 }
             });
@@ -34,7 +34,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
         file.mv('./uploads/' + file.name, function (error) {
             if (error) {
-                logger.error('Failed to move file:', error);
+                logger.error('Failed to move file: ' + error);
             } else {
                 uploadToAdminService(title, category, file, next);
             }
@@ -46,10 +46,10 @@ module.exports = function HubAdminClient(appConfig, logger) {
         unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
             .end(function(response) {
                 if (response.error) {
-                    logger.error('Get content items error', response.error);
+                    logger.error('Get content items error ' + response.error);
                     next(response.error, null);
                 } else {
-                    logger.info('Get content items response', response.status);
+                    logger.info('Get content items response ' + response.status);
                     next(null, response.body);
                 }
             });
