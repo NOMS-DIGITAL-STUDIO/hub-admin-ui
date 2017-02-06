@@ -23,15 +23,3 @@ National Offender Management Service.
   $ gulp dev
   ```
 3. Visit [localhost:3000](http://localhost:3000/)
-
-
-# Dev Guidance
-
-## Logging
-
-Logging uses winston. Create log output (other than debug) as eg
-
-```
-logger.info('message')
-logger.debug('message')
-```
