@@ -5,9 +5,9 @@ Upload - Prospectus
 {% endblock %}
 
 {% block content %}
+
 <main id="content" role="main">
     {% include "includes/phase_banner_alpha.html" %}
-
 
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -39,7 +39,7 @@ Upload - Prospectus
                     <input class="form-control" id="prospectusTitle" type="text" name="prospectusTitle">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="#list-category">
                     <label class="form-label-bold" for="prospectusSubject">Subject</label>
                     <span class="form-hint">Select the subject that the prospectus is from.</span>
                     <select class="form-control" id="prospectusSubject" name="prospectusSubject">
@@ -60,7 +60,7 @@ Upload - Prospectus
                 </div>
 
                 <div class="form-group" id="#file-upload">
-                    <label class="form-label-bold" for="prospectusFile">Upload file</label>
+                    <label class="form-label-bold" for="prospectusFile">Upload prospectus file</label>
                     <span class="form-hint">This should be in a PDF format and no larger than 5MB.</span>
                     <input type="file" id="prospectusFile" name="prospectusFile">
                 </div>

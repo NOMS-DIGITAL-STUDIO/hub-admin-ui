@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+Upload - Video
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+    {% include "includes/phase_banner_alpha.html" %}
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 class="heading-xlarge">A Course</h1>
+
+            <div class="error-summary js-hidden" role="group" aria-labelledby="error-summary-heading-example-2"
+                 tabindex="-1">
+                <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-2">
+                    Please check the following areas
+                </h1>
+                <p>One or more errors have occurred while trying to save your progress</p>
+                <ul class="error-summary-list">
+                    <li><a href="#title-course">Not including the title of a course</a></li>
+                    <li><a href="#file-upload">Uploading a file that's too large</a></li>
+                </ul>
+            </div>
+
+
+            <form action="" method="post" class="form" enctype="multipart/form-data" name="upload">
+
+                <h3 class="heading-medium">Video</h3>
+
+                <div class="form-group" id="#title-video">
+                    <legend id="file-upload">
+                        <label class="form-label-bold" for="videoTitle">Title</label>
+                    </legend>
+                    <span class="form-hint">For example, ‘Understanding Your Emotions’.</span>
+
+                    <input class="form-control" id="videoTitle" type="text" name="videoTitle">
+                </div>
+
+                <div class="form-group" id="#list-category">
+                    <label class="form-label-bold" for="videoSubject">Category</label>
+                    <span class="form-hint">Select the category of the video. <br>For example: A video about algebra would be in the 'Maths' category.</span>
+                    <select class="form-control" id="videoSubject" name="videoSubject">
+                        <option>Distance Learning</option>
+                        <option>Art and Literature</option>
+                        <option>Business and Economics</option>
+                        <option>Counselling and Psychology</option>
+                        <option>English</option>
+                        <option>Environmental Studies</option>
+                        <option>Foreign Languages</option>
+                        <option>History</option>
+                        <option>Law and Politics</option>
+                        <option>Maths</option>
+                        <option>Philosophy</option>
+                        <option>Science</option>
+                        <option>Sociology</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="#file-upload">
+                    <label class="form-label-bold" for="videoFile">Upload video file</label>
+                    <span class="form-hint">The format should be MP4.</span>
+                    <input type="file" id="videoFile" name="videoFile">
+                </div>
+
+                <div class="form-group">
+                    <input class="button" type="submit" value="Save" id="upload">
+
+                    {% if uploadDetails.success %}
+                    <h4 id="uploadSuccess" class="success">Saved successfully</h4>
+                    <p id="uploadSuccessNotes" class="font-xsmall">{{ uploadDetails.timestamp }}</p>
+                    {% endif %}
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="column-full">
+            {% include "components/content_items_table.html" %}
+        </div>
+    </div>
+
+</main>
+{% endblock %}
