@@ -50,20 +50,4 @@ describe('Hub Admin Client: ', function () {
         });
     });
 
-
-    // it('sends upload to hub admin rest service', function (done) {
-    //
-    //     var hubAdmin = nock('http://localhost:8080')
-    //         .post('/hub-admin/content-items')
-    //         .reply(201);
-    //
-    //     // I have not found a way to deal with files in this test.
-    //
-    //     client.upload('aTitle', 'aCategory', aFile, function () {
-    //
-    //         // what would we test here
-    //         done();
-    //     });
-    // });
-
 });

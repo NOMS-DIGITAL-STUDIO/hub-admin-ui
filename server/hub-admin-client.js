@@ -55,8 +55,6 @@ module.exports = function HubAdminClient(appConfig, logger) {
             });
     }
 
-
-
     return {
         upload: upload,
         list: getAllContentItems

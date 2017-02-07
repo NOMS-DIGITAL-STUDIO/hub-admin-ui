@@ -14,8 +14,7 @@ var appConfig = {
     'adminServerRoot': process.env.ADMIN_SERVER_ROOT || 'http://localhost:8080',
     'logLevel': process.env.LOG_LEVEL || 'info',
     'name': 'hub-admin-ui',
-    'port': process.env.PORT || 3000,
-
+    'port': process.env.PORT || 3000
 };
 
 

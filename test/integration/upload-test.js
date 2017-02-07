@@ -34,13 +34,6 @@ describe('Upload routes: ', function () {
             .end(function (err, res) {
 
                 expect(res.status).to.equal(200);
-
-                // todo how to intercept Express res/req in a test
-                // todo or do this in a unit test see routes-test.js if I could only get mocking to work
-                // res.body.filename.should.equal('samplde.txt');
-                // res.body.title.should.equal('aTitle');
-                // res.body.category.should.equal('aSubject');
-
                 done();
             });
     });
@@ -61,11 +54,7 @@ describe('Upload routes: ', function () {
             .end(function (err, res) {
 
                 expect(res.status).to.equal(200);
-
                 expect(res.text).to.have.string('Saved successfully');
-                // todo how to intercept Express res/req in a test
-                // var reported = moment(res.body.timestamp);
-                // expect(reported.isSameOrAfter(start)).to.be.true;
 
                 done();
             });
