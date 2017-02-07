@@ -11,7 +11,9 @@ describe('Hub Admin Client: ', function () {
     var client;
 
     var appConfig = {
-        'adminServerRoot': 'http://localhost:8080'
+        'adminServerRoot': 'http://localhost:8080',
+        'userName' : 'user',
+        'password' : 'password'
     };
 
     beforeEach(function () {

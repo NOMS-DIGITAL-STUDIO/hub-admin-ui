@@ -6,6 +6,10 @@ module.exports = function HubAdminClient(appConfig, logger) {
     var uploadToAdminService = function (title, category, file, next) {
 
         unirest.post(appConfig.adminServerRoot + '/hub-admin/content-items')
+            .auth({
+                user: appConfig.userName,
+                pass: appConfig.password
+            })
             .headers({'Content-Type': 'multipart/form-data'})
             .field('title', title)
             .field('category', category)
@@ -44,6 +48,10 @@ module.exports = function HubAdminClient(appConfig, logger) {
     var getAllContentItems = function(next){
 
         unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
+            .auth({
+                user: appConfig.userName,
+                pass: appConfig.password
+            })
             .end(function(response) {
                 if (response.error) {
                     logger.error('Get content items error ' + response.error);
