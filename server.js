@@ -41,6 +41,8 @@ logger.level = appConfig.logLevel;
 
 var HubAdminClient = require('./server/hub-admin-client.js');
 var hubAdminClient = new HubAdminClient(appConfig, logger);
+var hubAuth = require('./server/hub-auth.js');
+
 
 var Routes = require('./app/routes.js');
 var routes = new Routes(hubAdminClient, logger);
@@ -77,6 +79,7 @@ app.use(fileUpload());
 
 // Express Routing Configuration
 // NB Must be after fileupload, bodyparser config
+app.use('/', hubAuth.basicAuth(appConfig.userName, appConfig.password));
 app.use('/', routes.router);
 
 

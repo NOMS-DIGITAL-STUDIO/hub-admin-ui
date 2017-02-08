@@ -34,7 +34,8 @@
     "run-sequence": "^1.2.2",
     "serve-favicon": "2.3.2",
     "unirest": "^0.5.1",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "basic-auth": "^1.1.0"
   },
   "repository": {
     "type": "git",

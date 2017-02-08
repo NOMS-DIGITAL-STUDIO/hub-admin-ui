@@ -22,6 +22,7 @@ describe('Server route config: ', function () {
     it('responds to / with the prospectus page', function testSlash(done) {
         request(server)
             .get('/')
+            .auth('user', 'password')
             .end(function (err, res) {
                 expect(res.text).to.have.string('Upload prospectus file');
                 expect(res.status).to.equal(200);
@@ -32,6 +33,7 @@ describe('Server route config: ', function () {
     it('responds to /prospectus with the prospectus page', function testSlash(done) {
         request(server)
             .get('/prospectus')
+            .auth('user', 'password')
             .end(function (err, res) {
                 expect(res.text).to.have.string('Upload prospectus file');
                 expect(res.status).to.equal(200);
@@ -42,6 +44,7 @@ describe('Server route config: ', function () {
     it('responds to /video with the video page', function testSlash(done) {
         request(server)
             .get('/video')
+            .auth('user', 'password')
             .end(function (err, res) {
                 expect(res.text).to.have.string('Upload video file');
                 expect(res.status).to.equal(200);
@@ -52,6 +55,7 @@ describe('Server route config: ', function () {
     it('gives 404 when not found', function testPath(done) {
         request(server)
             .get('/foo/bar')
+            .auth('user', 'password')
             .expect(404, done);
     });
 
