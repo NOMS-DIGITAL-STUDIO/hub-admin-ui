@@ -9,5 +9,7 @@ test:
 deployment:
   dev:
     branch: master
-    heroku:
-      appname: hub-admin-ui
+    commands:
+      - git push git@heroku.com:hub-admin-ui.git $CIRCLE_SHA1:master
+      - heroku ps:scale web=1 --app hub-admin-ui
+      - curl -v -X POST https://circleci.com/api/v1.1/project/github/NOMS-DIGITAL-STUDIO/hub-function-test?circle-token=$CIRCLE_TOKEN
