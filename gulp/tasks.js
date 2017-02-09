@@ -3,8 +3,7 @@ var runSequence = require('run-sequence');
 
 gulp.task('default', function (done) {
     runSequence(
-        'build',
-        'server', done)
+        'build', done)
 });
 
 gulp.task('dev', function (done) {
