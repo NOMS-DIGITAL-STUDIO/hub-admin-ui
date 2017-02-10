@@ -54,7 +54,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
                 } else   {
                     logger.info('admin API upload successful');
-                    callback(null, apiResponse.status);
+                    callback(null, apiResponse.statusCode);
 
                 }
             });
