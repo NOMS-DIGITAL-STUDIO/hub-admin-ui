@@ -1,7 +1,6 @@
 // Dependencies
 var bodyParser = require('body-parser');
 var express = require('express');
-var fileUpload = require('express-fileupload');
 var logger = require('winston');
 var path = require('path');
 
@@ -74,7 +73,6 @@ var nunjucksAppEnv = nunjucks.configure(views, {
 // Request Processing Configuration
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(fileUpload());
 
 
 // Express Routing Configuration

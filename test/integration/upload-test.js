@@ -29,9 +29,9 @@ describe('Upload routes: ', function () {
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('prospectusTitle', 'aTitle')
-            .field('prospectusSubject', 'aSubject')
-            .attach('prospectusFile', 'test/resources/sample.txt')
+            .field('title', 'aTitle')
+            .field('category', 'aSubject')
+            .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
                 expect(res.status).to.equal(200);
@@ -50,9 +50,9 @@ describe('Upload routes: ', function () {
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('prospectusTitle', 'aTitle')
-            .field('prospectusSubject', 'aSubject')
-            .attach('prospectusFile', 'test/resources/sample.txt')
+            .field('title', 'aTitle')
+            .field('category', 'aSubject')
+            .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
                 expect(res.status).to.equal(200);
@@ -72,9 +72,9 @@ describe('Upload routes: ', function () {
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('prospectusTitle', 'aTitle')
-            .field('prospectusSubject', 'aSubject')
-            .attach('prospectusFile', 'test/resources/sample.txt')
+            .field('title', 'aTitle')
+            .field('category', 'aSubject')
+            .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
                 expect(res.status).to.equal(400);
