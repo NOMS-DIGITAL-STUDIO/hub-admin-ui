@@ -17,8 +17,8 @@
 
     {% for item in contentItems %}
     <tr id="contentItem{{ loop.index0 }}">
-        <td id="contentItem{{ loop.index0 }}-title">{{ item.title }}</td>
-        <td id="contentItem{{ loop.index0 }}-subject" class="numeric">{{ item.category }}</td>
+        <td id="contentItem{{ loop.index0 }}-title">{{ item.metadata.title }}</td>
+        <td id="contentItem{{ loop.index0 }}-subject" class="numeric">{{ item.metadata.category }}</td>
         <td id="contentItem{{ loop.index0 }}-filename" class="numeric">{{ item.filename }}</td>
     </tr>
     {% else %}

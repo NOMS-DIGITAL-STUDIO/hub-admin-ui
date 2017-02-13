@@ -24,10 +24,10 @@ describe('Hub Admin Client: ', function () {
     it('gives list of all content items as the response body', function (done) {
 
         var listContentItems = nock('http://localhost:8080')
-            .get('/hub-admin/content-items')
+            .get("/hub-admin/content-items?filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D")
             .reply(200, {'contentItems': 'stubbed response'});
 
-        client.list(function (error, body) {
+        client.list('application/pdf', function (error, body) {
 
             assert.ifError(error);
             expect(body.contentItems).to.equal('stubbed response');
@@ -40,10 +40,10 @@ describe('Hub Admin Client: ', function () {
     it('returns error when rest service call results in error', function (done) {
 
         var listContentItems = nock('http://localhost:8080')
-            .get('/hub-admin/content-items')
+            .get('/hub-admin/content-items?filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D"')
             .replyWithError('something went wrong');
 
-        client.list(function (error, body) {
+        client.list('application/pdf', function (error, body) {
 
             assert.isNull(body);
             assert.isNotNull(error);

@@ -6,21 +6,29 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     var router = express.Router();
 
-    function getContentItems(req, res, next) {
-        hubAdminClient.list(function (error, jsonData) {
+    function getList(req, res, mediaType, callback) {
+        hubAdminClient.list(mediaType, function (error, jsonData) {
             if (error === null) {
                 logger.info('get list successful');
                 logger.debug('get items response: ' + JSON.stringify(jsonData));
-                next(jsonData);
+                callback(jsonData);
             } else {
                 logger.error('Get list error: ' + error);
-                next(error);
+                callback(error);
             }
         });
     }
 
-    function list(req, res, next) {
-        getContentItems(req, res, function (jsonData) {
+    function listPdf(req, res, next) {
+        list(req, res, 'application/pdf', next);
+    }
+
+    function listVideo(req, res, next) {
+        list(req, res, 'video/mp4', next);
+    }
+
+    function list(req, res, mediaType, next) {
+        getList(req, res, mediaType, function (jsonData) {
             res.contentItems = jsonData.contentItems;
             return next();
         });
@@ -103,14 +111,14 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
     }
 
-    router.get('/', [list, prospectus]);
-    router.post('/', [uploadFiles, list, prospectus]);
+    router.get('/', [listPdf, prospectus]);
+    router.post('/', [uploadFiles, listPdf, prospectus]);
 
-    router.get('/prospectus', [list, prospectus]);
-    router.post('/prospectus', [uploadFiles, list, prospectus]);
+    router.get('/prospectus', [listPdf, prospectus]);
+    router.post('/prospectus', [uploadFiles, listPdf, prospectus]);
 
-    router.get('/video', [list, video]);
-    router.post('/video', [uploadFiles, list, video]);
+    router.get('/video', [listVideo, video]);
+    router.post('/video', [uploadFiles, listVideo, video]);
 
     return {
         router: router

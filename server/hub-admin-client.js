@@ -15,9 +15,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
 
         var formData = {
-            title: metadata.title,
-            category: metadata.category,
-            //mediaType: metadata.mediaType,
+            metadata: JSON.stringify(metadata),
             file: {
                 value: file,
                 options: {
@@ -60,9 +58,10 @@ module.exports = function HubAdminClient(appConfig, logger) {
             });
     };
 
-    var getAllContentItems = function (callback) {
+    var getContentItems = function (mediaType, callback) {
 
         unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
+            .query("filter={'metadata.mediaType':'" + mediaType + "'}")
             .auth({
                 user: appConfig.userName,
                 pass: appConfig.password
@@ -80,7 +79,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
     return {
         upload: upload,
-        list: getAllContentItems
+        list: getContentItems
     };
 }
 ;

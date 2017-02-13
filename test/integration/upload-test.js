@@ -8,7 +8,7 @@ describe('Upload routes: ', function () {
 
     var server;
 
-    beforeEach(function () {
+     beforeEach(function () {
         server = require('../../server').server;
 
         var listContentItems = nock('http://localhost:8080')
@@ -29,8 +29,7 @@ describe('Upload routes: ', function () {
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('title', 'aTitle')
-            .field('category', 'aSubject')
+            .field('metadata', "{title: 'title', category:'category', mediaType: 'text/plain'}")
             .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
@@ -50,8 +49,7 @@ describe('Upload routes: ', function () {
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('title', 'aTitle')
-            .field('category', 'aSubject')
+            .field('metadata', "{title: 'title', category:'category', mediaType: 'text/plain'}")
             .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
@@ -72,8 +70,7 @@ describe('Upload routes: ', function () {
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('title', 'aTitle')
-            .field('category', 'aSubject')
+            .field('metadata', "{title: 'title', category:'category', mediaType: 'text/plain'}")
             .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
 
