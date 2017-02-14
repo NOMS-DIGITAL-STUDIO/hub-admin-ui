@@ -25,3 +25,23 @@ h4.failure {
         margin-bottom: 0px
     }
 }
+
+.duration-video {
+    padding: 0 10px 0 0;
+    width: 75px;
+    float: left;
+
+    input.form-control {
+        width: 100%;
+    }
+}
+
+.description-video {
+    margin-bottom: 30px;
+
+    textarea {
+        width: 100%;
+        height: 150px;
+        resize: none;
+    }
+}

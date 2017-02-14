@@ -20,6 +20,10 @@ $(document).ready(function () {
     showHideContent.init();
 /* jshint ignore:end */
 
+    $('#upload-form').submit(function () {
+        var videoLength = $('#lengthHours').val() + ':' + $('#lengthMinutes').val() + ':' + $('#lengthSeconds').val();
+        $('#videoLength').val(videoLength)
+    });
 });
 
 
