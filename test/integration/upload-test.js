@@ -10,10 +10,6 @@ describe('Upload routes: ', function () {
 
      beforeEach(function () {
         server = require('../../server').server;
-
-        var listContentItems = nock('http://localhost:8080')
-            .get('/hub-admin/content-items')
-            .reply(200, {});
     });
 
     afterEach(function () {
@@ -22,18 +18,27 @@ describe('Upload routes: ', function () {
 
     it('upload response re-states request parameters', function testUpload(done) {
 
-        var hubAdmin = nock('http://localhost:8080')
+        var postFile = nock('http://localhost:8080')
             .post('/hub-admin/content-items')
             .reply(201);
+
+        var filter = escape("filter={'metadata.mediaType':'application/pdf'}");
+
+        var listPdfs = nock('http://localhost:8080')
+            .get('/hub-admin/content-items?' + filter)
+            .reply(200, {});
 
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('metadata', "{title: 'title', category:'category', mediaType: 'text/plain'}")
+            .field('metadata', "{title: 'title', category:'category', mediaType: 'application/pdf'}")
             .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
-
                 expect(res.status).to.equal(200);
+
+                expect(postFile.isDone()).to.be.true;
+                expect(listPdfs.isDone()).to.be.true;
+
                 done();
             });
     });
@@ -42,39 +47,47 @@ describe('Upload routes: ', function () {
 
         var start = moment({second: 0, millisecond: 0});
 
-        var hubAdmin = nock('http://localhost:8080')
+        var postFile = nock('http://localhost:8080')
             .post('/hub-admin/content-items')
             .reply(201);
+
+        var filter = escape("filter={'metadata.mediaType':'application/pdf'}");
+
+        var listPdfs = nock('http://localhost:8080')
+            .get('/hub-admin/content-items?' + filter)
+            .reply(200, {});
 
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('metadata', "{title: 'title', category:'category', mediaType: 'text/plain'}")
+            .field('metadata', "{title: 'title', category:'category', mediaType: 'application/pdf'}")
             .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
-
                 expect(res.status).to.equal(200);
                 expect(res.text).to.have.string('Saved successfully');
 
+                expect(postFile.isDone()).to.be.true;
+                expect(listPdfs.isDone()).to.be.true;
+
                 done();
             });
-
     });
 
     it('propagates response status received from hub-admin rest', function testUpload(done) {
 
-        var hubAdmin = nock('http://localhost:8080')
+        var postFile = nock('http://localhost:8080')
             .post('/hub-admin/content-items')
             .reply(400);
 
         request(server)
             .post('/')
             .auth('user', 'password')
-            .field('metadata', "{title: 'title', category:'category', mediaType: 'text/plain'}")
+            .field('metadata', "{title: 'title', category:'category', mediaType: 'application/pdf'}")
             .attach('mainFile', 'test/resources/sample.txt')
             .end(function (err, res) {
-
                 expect(res.status).to.equal(400);
+
+                expect(postFile.isDone()).to.be.true;
 
                 done();
             });

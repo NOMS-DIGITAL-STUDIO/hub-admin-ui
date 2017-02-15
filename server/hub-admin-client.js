@@ -60,8 +60,10 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
     var getContentItems = function (mediaType, callback) {
 
+        var filter = escape("filter={'metadata.mediaType':'" + mediaType + "'}");
+
         unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
-            .query("filter={'metadata.mediaType':'" + mediaType + "'}")
+            .query(filter)
             .auth({
                 user: appConfig.userName,
                 pass: appConfig.password

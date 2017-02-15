@@ -23,8 +23,10 @@ describe('Hub Admin Client: ', function () {
 
     it('gives list of all content items as the response body', function (done) {
 
+        var filter = escape("filter={'metadata.mediaType':'application/pdf'}");
+
         var listContentItems = nock('http://localhost:8080')
-            .get("/hub-admin/content-items?filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D")
+            .get("/hub-admin/content-items?" + filter)
             .reply(200, {'contentItems': 'stubbed response'});
 
         client.list('application/pdf', function (error, body) {
