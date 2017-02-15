@@ -17,7 +17,7 @@ describe('Server route config: ', function () {
 
     it('responds to / with the prospectus page', function testSlash(done) {
 
-        var filter = escape("filter={'metadata.mediaType':'application/pdf'}");
+        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
 
         var listPdfs = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
@@ -38,7 +38,7 @@ describe('Server route config: ', function () {
 
     it('responds to /prospectus with the prospectus page', function testSlashProspectus(done) {
 
-        var filter = escape("filter={'metadata.mediaType':'application/pdf'}");
+        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
 
         var listPdfs = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
@@ -59,7 +59,7 @@ describe('Server route config: ', function () {
 
     it('responds to /video with the video page', function testSlashVideo(done) {
 
-        var filter = escape("filter={'metadata.mediaType':'video/mp4'}");
+        var filter = "filter=%7B%27metadata.mediaType%27:%27video/mp4%27%7D";
 
         var listVideos = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)

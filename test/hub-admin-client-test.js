@@ -23,7 +23,7 @@ describe('Hub Admin Client: ', function () {
 
     it('gives list of all content items as the response body', function (done) {
 
-        var filter = escape("filter={'metadata.mediaType':'application/pdf'}");
+        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
 
         var listContentItems = nock('http://localhost:8080')
             .get("/hub-admin/content-items?" + filter)
@@ -41,8 +41,10 @@ describe('Hub Admin Client: ', function () {
 
     it('returns error when rest service call results in error', function (done) {
 
+        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
+
         var listContentItems = nock('http://localhost:8080')
-            .get('/hub-admin/content-items?filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D"')
+            .get("/hub-admin/content-items?" + filter)
             .replyWithError('something went wrong');
 
         client.list('application/pdf', function (error, body) {

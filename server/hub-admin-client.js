@@ -60,7 +60,11 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
     var getContentItems = function (mediaType, callback) {
 
-        var filter = escape("filter={'metadata.mediaType':'" + mediaType + "'}");
+        var filter = "filter={'metadata.mediaType':'" + mediaType + "'}";
+        var encodedFilter = escape(filter);
+
+        logger.info('Filter expression: ' + filter);
+        logger.info('Filter expression - encoded: ' + encodedFilter);
 
         unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
             .query(filter)

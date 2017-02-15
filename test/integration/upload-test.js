@@ -22,7 +22,7 @@ describe('Upload routes: ', function () {
             .post('/hub-admin/content-items')
             .reply(201);
 
-        var filter = escape("filter={'metadata.mediaType':'application/pdf'}");
+        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
 
         var listPdfs = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
@@ -51,7 +51,7 @@ describe('Upload routes: ', function () {
             .post('/hub-admin/content-items')
             .reply(201);
 
-        var filter = escape("filter={'metadata.mediaType':'application/pdf'}");
+        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
 
         var listPdfs = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
