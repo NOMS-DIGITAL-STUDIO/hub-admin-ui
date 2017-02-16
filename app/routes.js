@@ -27,6 +27,10 @@ module.exports = function Routes(hubAdminClient, logger) {
         list(req, res, 'video/mp4', next);
     }
 
+    function listAll(req, res, next) {
+        list(req, res, '', next);
+    }
+
     function list(req, res, mediaType, next) {
         getList(req, res, mediaType, function (jsonData) {
             res.contentItems = jsonData.contentItems;
@@ -111,8 +115,13 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
     }
 
-    router.get('/', [listPdf, prospectus]);
-    router.post('/', [uploadFiles, listPdf, prospectus]);
+    function contentList(req, res) {
+        res.status(200).render('all-content-items', {
+            'contentItems': res.contentItems
+        });
+    }
+
+    router.get('/', [listAll, contentList]);
 
     router.get('/prospectus', [listPdf, prospectus]);
     router.post('/prospectus', [uploadFiles, listPdf, prospectus]);
