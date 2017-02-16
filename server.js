@@ -68,6 +68,11 @@ var nunjucksAppEnv = nunjucks.configure(views, {
     noCache: true,
     watch: true
 });
+
+var dateFilter = require('nunjucks-date-filter');
+nunjucksAppEnv.addFilter('date', dateFilter);
+dateFilter.setDefaultFormat('HH:MM on DD/MM/YYYY');
+
 /* jshint ignore:end */
 
 // Request Processing Configuration

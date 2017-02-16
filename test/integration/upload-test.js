@@ -29,7 +29,7 @@ describe('Upload routes: ', function () {
             .reply(200, {});
 
         request(server)
-            .post('/')
+            .post('/prospectus')
             .auth('user', 'password')
             .field('metadata', "{title: 'title', category:'category', mediaType: 'application/pdf'}")
             .attach('mainFile', 'test/resources/sample.txt')
@@ -58,7 +58,7 @@ describe('Upload routes: ', function () {
             .reply(200, {});
 
         request(server)
-            .post('/')
+            .post('/prospectus')
             .auth('user', 'password')
             .field('metadata', "{title: 'title', category:'category', mediaType: 'application/pdf'}")
             .attach('mainFile', 'test/resources/sample.txt')
@@ -80,7 +80,7 @@ describe('Upload routes: ', function () {
             .reply(400);
 
         request(server)
-            .post('/')
+            .post('/prospectus')
             .auth('user', 'password')
             .field('metadata', "{title: 'title', category:'category', mediaType: 'application/pdf'}")
             .attach('mainFile', 'test/resources/sample.txt')

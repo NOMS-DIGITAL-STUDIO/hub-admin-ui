@@ -60,7 +60,10 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
     var getContentItems = function (mediaType, callback) {
 
-        var filter = "filter={'metadata.mediaType':'" + mediaType + "'}";
+        var filter = 'filter={}';
+        if (mediaType) {
+            filter = "filter={'metadata.mediaType':'" + mediaType + "'}";
+        }
         var encodedFilter = escape(filter);
 
         logger.debug('Filter expression: ' + filter);

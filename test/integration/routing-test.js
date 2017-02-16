@@ -15,11 +15,11 @@ describe('Server route config: ', function () {
         server.close();
     });
 
-    it('responds to / with the prospectus page', function testSlash(done) {
+    it('responds to / with the all content list page', function testSlash(done) {
 
-        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
+        var filter = "filter=%7B%7D";
 
-        var listPdfs = nock('http://localhost:8080')
+        var listAllContent = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
             .reply(200, {});
 
@@ -27,10 +27,10 @@ describe('Server route config: ', function () {
             .get('/')
             .auth('user', 'password')
             .end(function (err, res) {
-                expect(res.text).to.have.string('Upload prospectus file');
+                expect(res.text).to.have.string('All Content');
                 expect(res.status).to.equal(200);
 
-                expect(listPdfs.isDone()).to.be.true;
+                expect(listAllContent.isDone()).to.be.true;
 
                 done();
             });
