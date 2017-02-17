@@ -64,10 +64,8 @@ module.exports = function HubAdminClient(appConfig, logger) {
         if (mediaType) {
             filter = "filter={'metadata.mediaType':'" + mediaType + "'}";
         }
-        var encodedFilter = escape(filter);
 
         logger.debug('Filter expression: ' + filter);
-        logger.debug('Filter expression - encoded: ' + encodedFilter);
 
         unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
             .query(filter)
