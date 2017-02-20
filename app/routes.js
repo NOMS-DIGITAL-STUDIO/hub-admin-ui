@@ -6,6 +6,8 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     var router = express.Router();
 
+    var count;
+
     function getList(req, res, contentType, callback) {
         hubAdminClient.list(contentType, function (error, jsonData) {
             if (error === null) {
@@ -44,11 +46,16 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     function uploadFiles(req, res, next) {
 
+        var uploadPromises = [];
+
         var form = new multiparty.Form();
 
         var metadata = {};
 
         form.on('field', function (name, value) {
+
+            logger.info('Field: ' + name + ':' + value)
+
             metadata[name] = value;
         });
 
@@ -57,36 +64,13 @@ module.exports = function Routes(hubAdminClient, logger) {
             if (part.filename) {
 
                 logger.info('File upload detected: ' + part.filename);
-                logger.debug('Form part name ' + part.name);
-                logger.debug('File byte count ' + part.byteCount);
-                logger.debug('File content type ' + part.headers['content-type']);
+                logger.info('Form part name ' + part.name);
+                logger.info('File byte count ' + part.byteCount);
+                logger.info('File content type ' + part.headers['content-type']);
 
                 metadata.mediaType = part.headers['content-type'];
 
-                hubAdminClient.upload(metadata, part, function (error, response) {
-
-                    if (error === null) {
-                        logger.info('upload successful');
-
-                        res.resultJson = {
-                            'success': true,
-                            'filename': part.filename,
-                            'timestamp': moment().format('YYYY-MM-DD HH:mm')
-                        };
-
-                        // todo
-                        // Have to "consume" the file here. Doesn't work if not.
-                        // Need to call next to get back into the express flow, but that stops us handling another file
-                        // Calling next in the form onClose callback doesn't wait for the fileupload
-                        // To allow multiple files to be uploaded from one form, need to work out the callback sequence
-                        // to trigger next() at the right time.
-                        next();
-
-                    } else {
-                        logger.error('File upload error: ' + error);
-                        next(error);
-                    }
-                });
+                uploadPromises.push(uploadFile(metadata, part));
             }
 
             part.on('error', function (error) {
@@ -99,11 +83,46 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
 
         form.on('close', function () {
-            logger.debug('closing');
+            logger.info('closing');
+
+            Promise.all(uploadPromises).then(function () {
+                    logger.info('all promises done');
+
+                    res.resultJson = {
+                        'success': true,
+                        'timestamp': moment().format('YYYY-MM-DD HH:mm')
+                    };
+
+                    next();
+                },
+                function (err) {
+                    logger.info('all promises err');
+                    next(err);
+                });
+
         });
 
         form.parse(req);
     }
+
+    function uploadFile(metadata, part) {
+        return new Promise(function (resolve, reject) {
+
+            logger.info('uploading ' + part.name);
+            hubAdminClient.upload(metadata, part, function (error, response) {
+
+                if (error === null) {
+                    logger.info('upload successful');
+                    resolve(logger.info('resolving ' + part.name));
+
+                } else {
+                    logger.error('File upload error: ' + error);
+                    reject(err);
+                }
+            });
+        });
+    }
+
 
     function prospectus(req, res) {
         res.status(200).render('prospectus', {
