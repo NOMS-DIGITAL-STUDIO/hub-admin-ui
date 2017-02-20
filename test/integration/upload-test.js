@@ -16,13 +16,13 @@ describe('Upload routes: ', function () {
         server.close();
     });
 
-    it('upload response re-states request parameters', function testUpload(done) {
+    it('upload response re-states request parameters', function (done) {
 
         var postFile = nock('http://localhost:8080')
             .post('/hub-admin/content-items')
             .reply(201);
 
-        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
+        var filter = "filter=%7B%27metadata.contentType%27:%27prospectus%27%7D";
 
         var listPdfs = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
@@ -43,7 +43,7 @@ describe('Upload routes: ', function () {
             });
     });
 
-    it('upload response includes a timestamp', function testUpload(done) {
+    it('upload response includes a timestamp', function (done) {
 
         var start = moment({second: 0, millisecond: 0});
 
@@ -51,7 +51,7 @@ describe('Upload routes: ', function () {
             .post('/hub-admin/content-items')
             .reply(201);
 
-        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
+        var filter = "filter=%7B%27metadata.contentType%27:%27prospectus%27%7D";
 
         var listPdfs = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
@@ -73,7 +73,7 @@ describe('Upload routes: ', function () {
             });
     });
 
-    it('propagates response status received from hub-admin rest', function testUpload(done) {
+    it('propagates response status received from hub-admin rest', function (done) {
 
         var postFile = nock('http://localhost:8080')
             .post('/hub-admin/content-items')

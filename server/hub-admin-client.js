@@ -58,11 +58,11 @@ module.exports = function HubAdminClient(appConfig, logger) {
             });
     };
 
-    var getContentItems = function (mediaType, callback) {
+    var getContentItems = function (contentType, callback) {
 
         var filter = 'filter={}';
-        if (mediaType) {
-            filter = "filter={'metadata.mediaType':'" + mediaType + "'}";
+        if (contentType) {
+            filter = "filter={'metadata.contentType':'" + contentType + "'}";
         }
 
         logger.debug('Filter expression: ' + filter);

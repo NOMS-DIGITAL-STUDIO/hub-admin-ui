@@ -6,8 +6,8 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     var router = express.Router();
 
-    function getList(req, res, mediaType, callback) {
-        hubAdminClient.list(mediaType, function (error, jsonData) {
+    function getList(req, res, contentType, callback) {
+        hubAdminClient.list(contentType, function (error, jsonData) {
             if (error === null) {
                 logger.info('get list successful');
                 logger.debug('get items response: ' + JSON.stringify(jsonData));
@@ -19,20 +19,20 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
     }
 
-    function listPdf(req, res, next) {
-        list(req, res, 'application/pdf', next);
+    function listProspectus(req, res, next) {
+        list(req, res, 'prospectus', next);
     }
 
     function listVideo(req, res, next) {
-        list(req, res, 'video/mp4', next);
+        list(req, res, 'video', next);
     }
 
     function listAll(req, res, next) {
         list(req, res, '', next);
     }
 
-    function list(req, res, mediaType, next) {
-        getList(req, res, mediaType, function (jsonData) {
+    function list(req, res, contentType, next) {
+        getList(req, res, contentType, function (jsonData) {
             res.contentItems = jsonData.contentItems;
             return next();
         });
@@ -123,8 +123,8 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     router.get('/', [listAll, contentList]);
 
-    router.get('/prospectus', [listPdf, prospectus]);
-    router.post('/prospectus', [uploadFiles, listPdf, prospectus]);
+    router.get('/prospectus', [listProspectus, prospectus]);
+    router.post('/prospectus', [uploadFiles, listProspectus, prospectus]);
 
     router.get('/video', [listVideo, video]);
     router.post('/video', [uploadFiles, listVideo, video]);

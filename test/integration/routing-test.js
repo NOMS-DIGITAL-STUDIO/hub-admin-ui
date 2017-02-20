@@ -15,7 +15,7 @@ describe('Server route config: ', function () {
         server.close();
     });
 
-    it('responds to / with the all content list page', function testSlash(done) {
+    it('responds to / with the all content list page', function (done) {
 
         var filter = "filter=%7B%7D";
 
@@ -36,9 +36,9 @@ describe('Server route config: ', function () {
             });
     });
 
-    it('responds to /prospectus with the prospectus page', function testSlashProspectus(done) {
+    it('responds to /prospectus with the prospectus page', function (done) {
 
-        var filter = "filter=%7B%27metadata.mediaType%27:%27application/pdf%27%7D";
+        var filter = "filter=%7B%27metadata.contentType%27:%27prospectus%27%7D";
 
         var listPdfs = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
@@ -57,9 +57,9 @@ describe('Server route config: ', function () {
             });
     });
 
-    it('responds to /video with the video page', function testSlashVideo(done) {
+    it('responds to /video with the video page', function (done) {
 
-        var filter = "filter=%7B%27metadata.mediaType%27:%27video/mp4%27%7D";
+        var filter = "filter=%7B%27metadata.contentType%27:%27video%27%7D";
 
         var listVideos = nock('http://localhost:8080')
             .get('/hub-admin/content-items?' + filter)
@@ -78,7 +78,7 @@ describe('Server route config: ', function () {
             });
     });
 
-    it('gives 404 when not found', function testPath(done) {
+    it('gives 404 when not found', function (done) {
         request(server)
             .get('/foo/bar')
             .auth('user', 'password')
