@@ -27,6 +27,10 @@ module.exports = function Routes(hubAdminClient, logger) {
         list(req, res, 'video', next);
     }
 
+    function listBook(req, res, next) {
+        list(req, res, 'book', next);
+    }
+
     function listAll(req, res, next) {
         list(req, res, '', next);
     }
@@ -115,6 +119,13 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
     }
 
+    function book(req, res) {
+        res.status(200).render('book', {
+            'uploadDetails': res.resultJson,
+            'contentItems': res.contentItems
+        });
+    }
+
     function contentList(req, res) {
         res.status(200).render('all-content-items', {
             'contentItems': res.contentItems
@@ -128,6 +139,9 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     router.get('/video', [listVideo, video]);
     router.post('/video', [uploadFiles, listVideo, video]);
+
+    router.get('/book', [listBook, book]);
+    router.post('/book', [uploadFiles, listBook, book]);
 
     return {
         router: router
