@@ -90,7 +90,7 @@ describe('Server route config: ', function () {
             .get('/book')
             .auth('user', 'password')
             .end(function (err, res) {
-                expect(res.text).to.have.string('Upload Book file');
+                expect(res.text).to.have.string('Upload eBook file');
                 expect(res.status).to.equal(200);
 
                 expect(listBooks.isDone()).to.be.true;
