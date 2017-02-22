@@ -17,8 +17,8 @@ All Content
                 <thead>
                 <tr id="contentItemsTableHeader">
                     <th scope="col">Title</th>
-                    <th class="numeric" scope="col">Content Type</th>
-                    <th class="numeric" scope="col">Updated</th>
+                    <th class="list-item" scope="col">Content Type</th>
+                    <th class="list-item" scope="col">Updated</th>
                 </tr>
                 </thead>
 
@@ -27,8 +27,8 @@ All Content
                 {% for item in contentItems %}
                 <tr id="contentItem{{ loop.index0 }}">
                     <td id="contentItem{{ loop.index0 }}-title">{{ item.metadata.title }}</td>
-                    <td id="contentItem{{ loop.index0 }}-content-type" class="numeric">{{ item.metadata.contentType | capitalize }}</td>
-                    <td id="contentItem{{ loop.index0 }}-timestamp" class="numeric">{{ item.timestamp | date }}</td>
+                    <td id="contentItem{{ loop.index0 }}-content-type" class="list-item">{{ item.metadata.contentType | capitalize }}</td>
+                    <td id="contentItem{{ loop.index0 }}-timestamp" class="list-item">{{ item.timestamp | date }}</td>
                 </tr>
                 {% else %}
                 <tr>
