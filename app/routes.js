@@ -1,23 +1,27 @@
 var express = require('express');
 var moment = require('moment');
-var multiparty = require('multiparty');
+var formidable = require('formidable');
+
+var util = require('util');
 
 module.exports = function Routes(hubAdminClient, logger) {
 
     var router = express.Router();
 
-    var count;
+    function listResponseHandler(error, jsonData, callback) {
+        if (error === null) {
+            logger.info('get list successful');
+            logger.debug('get items response: ' + JSON.stringify(jsonData));
+            callback(jsonData);
+        } else {
+            logger.error('Get list error: ' + error);
+            callback(error);
+        }
+    }
 
     function getList(req, res, contentType, callback) {
         hubAdminClient.list(contentType, function (error, jsonData) {
-            if (error === null) {
-                logger.info('get list successful');
-                logger.debug('get items response: ' + JSON.stringify(jsonData));
-                callback(jsonData);
-            } else {
-                logger.error('Get list error: ' + error);
-                callback(error);
-            }
+            listResponseHandler(error, jsonData, callback);
         });
     }
 
@@ -44,85 +48,54 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
     }
 
+    function resultDetails() {
+        return {
+            'success': true,
+            'timestamp': moment().format('YYYY-MM-DD HH:mm')
+        };
+    }
+
+    function handleUploadResponse(error, res, next) {
+
+        if (error === null) {
+            logger.info('upload successful');
+            res.resultJson = resultDetails();
+            next();
+
+        } else {
+            logger.info('upload error');
+            next(error);
+        }
+    }
+
     function uploadFiles(req, res, next) {
 
-        var uploadPromises = [];
-
-        var form = new multiparty.Form();
+        var incomingForm = new formidable.IncomingForm();
 
         var metadata = {};
+        var files = [];
+        var fileLabels = [];
 
-        form.on('field', function (name, value) {
-
-            logger.info('Field: ' + name + ':' + value)
-
-            metadata[name] = value;
+        incomingForm.on('field', function (field, value) {
+            metadata[field] = value;
         });
 
-        form.on('part', function (part) {
-
-            if (part.filename) {
-
-                logger.info('File upload detected: ' + part.filename);
-                logger.info('Form part name ' + part.name);
-                logger.info('File byte count ' + part.byteCount);
-                logger.info('File content type ' + part.headers['content-type']);
-
-                metadata.mediaType = part.headers['content-type'];
-
-                uploadPromises.push(uploadFile(metadata, part));
+        incomingForm.on('file', function (field, file) {
+            if (file.size > 0) {
+                fileLabels.push(field);
+                files.push(file);
             }
+        });
 
-            part.on('error', function (error) {
-                next(error);
+        incomingForm.on('end', function () {
+            metadata['fileLabels'] = fileLabels;
+            hubAdminClient.upload(metadata, files, function (error, response) {
+                handleUploadResponse(error, res, next);
             });
         });
 
-        form.on('error', function (error) {
-            next(error);
-        });
-
-        form.on('close', function () {
-            logger.info('closing');
-
-            Promise.all(uploadPromises).then(function () {
-                    logger.info('all promises done');
-
-                    res.resultJson = {
-                        'success': true,
-                        'timestamp': moment().format('YYYY-MM-DD HH:mm')
-                    };
-
-                    next();
-                },
-                function (err) {
-                    logger.info('all promises err');
-                    next(err);
-                });
-
-        });
-
-        form.parse(req);
+        incomingForm.parse(req);
     }
-
-    function uploadFile(metadata, part) {
-        return new Promise(function (resolve, reject) {
-
-            logger.info('uploading ' + part.name);
-            hubAdminClient.upload(metadata, part, function (error, response) {
-
-                if (error === null) {
-                    logger.info('upload successful');
-                    resolve(logger.info('resolving ' + part.name));
-
-                } else {
-                    logger.error('File upload error: ' + error);
-                    reject(err);
-                }
-            });
-        });
-    }
-
 
     function prospectus(req, res) {
         res.status(200).render('prospectus', {
@@ -161,6 +134,7 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     router.get('/book', [listBook, book]);
     router.post('/book', [uploadFiles, listBook, book]);
+
 
     return {
         router: router

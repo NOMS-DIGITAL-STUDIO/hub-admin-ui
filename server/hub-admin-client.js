@@ -1,88 +1,107 @@
 var request = require('request');
 var unirest = require('unirest');
 var util = require('util');
+var fs = require('fs');
 
 
 module.exports = function HubAdminClient(appConfig, logger) {
 
-    var upload = function (metadata, file, callback) {
+    var authConfig = {
+        user: appConfig.userName,
+        pass: appConfig.password,
+        sendImmediately: true
+    };
 
-        logger.debug('Commencing file upload');
+    var unirestAuthConfig = {
+        user: appConfig.userName,
+        pass: appConfig.password
+    };
 
-        logger.debug('File upload detected:' + file.filename);
-        logger.debug('File byte count ' + file.byteCount);
-        logger.debug('File content type ' + file.headers['content-type']);
+    var contentItemsUrl = appConfig.adminServerRoot + '/hub-admin/content-items';
 
+    function fileSpecFor(file) {
+        return {
+            value: fs.createReadStream(file.path),
+            options: {
+                filename: file.name
+            }
+        };
+    }
+
+    function fileSpecsFor(files) {
+        var fileSpecs = [];
+
+        for (var i = 0; i < files.length; i++) {
+            fileSpecs.push(fileSpecFor(files[i]));
+        }
+
+        return fileSpecs;
+    }
+
+    function uploadCompletionHandler(error, apiResponse, callback) {
+
+        if (error) {
+            callback(error, null);
+
+        } else if (apiResponse.statusCode >= 400) {
+            error = new Error('Admin API error');
+            error.status = apiResponse.statusCode;
+            callback(error, null);
+
+        } else {
+            logger.info('admin API upload successful');
+            callback(null, apiResponse.statusCode);
+
+        }
+    }
+
+    function upload(metadata, files, callback) {
+
+        logger.info('Commencing file upload');
 
         var formData = {
             metadata: JSON.stringify(metadata),
-            file: {
-                value: file,
-                options: {
-                    filename: file.filename,
-                    contentType: file.headers['content-type'],
-                    knownLength: file.byteCount
-                }
-            }
+            file: fileSpecsFor(files)
         };
 
-        logger.debug('formData: ' + util.inspect(formData));
+        var postData = {
+            auth: authConfig,
+            url: contentItemsUrl,
+            formData: formData,
+            preambleCRLF: true,
+            postambleCRLF: true
+        };
 
-        request.post({
-                auth: {
-                    'user': appConfig.userName,
-                    'pass': appConfig.password,
-                    'sendImmediately': true
-                },
-                url: appConfig.adminServerRoot + '/hub-admin/content-items',
-                formData: formData,
-                preambleCRLF: true,
-                postambleCRLF: true
-            },
+        request.post(postData, function complete(error, apiResponse, body) {
+            uploadCompletionHandler(error, apiResponse, callback)
+        });
+    }
 
-            function complete(error, apiResponse, body) {
-
-                if (error) {
-                    callback(error, null);
-
-                } else if (apiResponse.statusCode >= 400) {
-                    error = new Error('Admin API error');
-                    error.status = apiResponse.statusCode;
-                    callback(error, null);
-
-                } else   {
-                    logger.info('admin API upload successful');
-                    callback(null, apiResponse.statusCode);
-
-                }
-            });
-    };
-
-    var getContentItems = function (contentType, callback) {
-
-        var filter = 'filter={}';
-        if (contentType) {
-            filter = "filter={'metadata.contentType':'" + contentType + "'}";
+    function listCompletionHandler(response, callback) {
+        if (response.error) {
+            logger.error('Get content items error ' + response.error);
+            callback(response.error, null);
+        } else {
+            logger.info('Get content items response ' + response.status);
+            callback(null, response.body);
         }
+    }
 
-        logger.debug('Filter expression: ' + filter);
+    function filterFor(contentType) {
+        if (contentType) {
+            return "filter={'metadata.contentType':'" + contentType + "'}";
+        }
+        return 'filter={}';
+    }
 
+    function getContentItems(contentType, callback) {
         unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
-            .query(filter)
-            .auth({
-                user: appConfig.userName,
-                pass: appConfig.password
-            })
+            .query(filterFor(contentType))
+            .auth(unirestAuthConfig)
             .end(function (response) {
-                if (response.error) {
-                    logger.error('Get content items error ' + response.error);
-                    callback(response.error, null);
-                } else {
-                    logger.info('Get content items response ' + response.status);
-                    callback(null, response.body);
-                }
+                listCompletionHandler(response, callback);
             });
-    };
+    }
 
     return {
         upload: upload,
