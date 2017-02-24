@@ -2,7 +2,7 @@ var express = require('express');
 var moment = require('moment');
 var formidable = require('formidable');
 
-module.exports = function Routes(hubAdminClient, logger) {
+module.exports = function Routes(appConfig, hubAdminClient, logger) {
 
     var router = express.Router();
 
@@ -20,7 +20,14 @@ module.exports = function Routes(hubAdminClient, logger) {
     router.post('/book', [uploadFiles, listBook, book]);
 
     function healthCheck(req, res, next) {
-        res.sendStatus(200);
+        var health = {
+            'health': {
+                'status': 'OK',
+                'timestamp': moment().format('YYYY-MM-DD HH:mm'),
+                'version': appConfig.version
+            }
+        };
+        res.status(200).send(health);
     }
 
     function listAll(req, res, next) {

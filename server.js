@@ -15,7 +15,8 @@ var appConfig = {
     'password': process.env.PASSWORD || 'password',
     'logLevel': process.env.LOG_LEVEL || 'info',
     'name': 'hub-admin-ui',
-    'port': process.env.PORT || 3000
+    'port': process.env.PORT || 3000,
+    'version': '0.1'
 };
 
 
@@ -44,7 +45,7 @@ var hubAuth = require('./server/hub-auth.js');
 
 
 var Routes = require('./app/routes.js');
-var routes = new Routes(hubAdminClient, logger);
+var routes = new Routes(appConfig, hubAdminClient, logger);
 
 //  Express Configuration
 var app = express();
