@@ -6,21 +6,20 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     var router = express.Router();
 
-    function listResponseHandler(error, jsonData, callback) {
-        if (error === null) {
-            logger.info('get list successful');
-            logger.debug('get items response: ' + JSON.stringify(jsonData));
-            callback(jsonData);
-        } else {
-            logger.error('Get list error: ' + error);
-            callback(error);
-        }
-    }
+    router.get('/', [listAll, contentList]);
 
-    function getList(req, res, contentType, callback) {
-        hubAdminClient.list(contentType, function (error, jsonData) {
-            listResponseHandler(error, jsonData, callback);
-        });
+    router.get('/prospectus', [listProspectus, prospectus]);
+    router.post('/prospectus', [uploadFiles, listProspectus, prospectus]);
+
+    router.get('/video', [listVideo, video]);
+    router.post('/video', [uploadFiles, listVideo, video]);
+
+    router.get('/book', [listBook, book]);
+    router.post('/book', [uploadFiles, listBook, book]);
+
+
+    function listAll(req, res, next) {
+        list(req, res, '', next);
     }
 
     function listProspectus(req, res, next) {
@@ -35,10 +34,6 @@ module.exports = function Routes(hubAdminClient, logger) {
         list(req, res, 'book', next);
     }
 
-    function listAll(req, res, next) {
-        list(req, res, '', next);
-    }
-
     function list(req, res, contentType, next) {
         getList(req, res, contentType, function (jsonData) {
             res.contentItems = jsonData.contentItems;
@@ -46,23 +41,20 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
     }
 
-    function resultDetails() {
-        return {
-            'success': true,
-            'timestamp': moment().format('YYYY-MM-DD HH:mm')
-        };
+    function getList(req, res, contentType, callback) {
+        hubAdminClient.list(contentType, function (error, jsonData) {
+            listResponseHandler(error, jsonData, callback);
+        });
     }
 
-    function handleUploadResponse(error, res, next) {
-
+    function listResponseHandler(error, jsonData, callback) {
         if (error === null) {
-            logger.info('upload successful');
-            res.resultJson = resultDetails();
-            next();
-
+            logger.info('get list successful');
+            logger.debug('get items response: ' + JSON.stringify(jsonData));
+            callback(jsonData);
         } else {
-            logger.info('upload error');
-            next(error);
+            logger.error('Get list error: ' + error);
+            callback(error);
         }
     }
 
@@ -95,6 +87,32 @@ module.exports = function Routes(hubAdminClient, logger) {
         incomingForm.parse(req);
     }
 
+    function handleUploadResponse(error, res, next) {
+
+        if (error === null) {
+            logger.info('upload successful');
+            res.resultJson = resultDetails();
+            next();
+
+        } else {
+            logger.info('upload error');
+            next(error);
+        }
+    }
+
+    function resultDetails() {
+        return {
+            'success': true,
+            'timestamp': moment().format('YYYY-MM-DD HH:mm')
+        };
+    }
+
+    function contentList(req, res) {
+        res.status(200).render('all-content-items', {
+            'contentItems': res.contentItems
+        });
+    }
+
     function prospectus(req, res) {
         res.status(200).render('prospectus', {
             'uploadDetails': res.resultJson,
@@ -115,24 +133,6 @@ module.exports = function Routes(hubAdminClient, logger) {
             'contentItems': res.contentItems
         });
     }
-
-    function contentList(req, res) {
-        res.status(200).render('all-content-items', {
-            'contentItems': res.contentItems
-        });
-    }
-
-    router.get('/', [listAll, contentList]);
-
-    router.get('/prospectus', [listProspectus, prospectus]);
-    router.post('/prospectus', [uploadFiles, listProspectus, prospectus]);
-
-    router.get('/video', [listVideo, video]);
-    router.post('/video', [uploadFiles, listVideo, video]);
-
-    router.get('/book', [listBook, book]);
-    router.post('/book', [uploadFiles, listBook, book]);
-
 
     return {
         router: router

@@ -18,39 +18,30 @@ module.exports = function HubAdminClient(appConfig, logger) {
 
     var contentItemsUrl = appConfig.adminServerRoot + '/hub-admin/content-items';
 
-    function fileSpecFor(file) {
-        return {
-            value: fs.createReadStream(file.path),
-            options: {
-                filename: file.name
-            }
-        };
+
+    function getContentItems(contentType, callback) {
+        unirest.get(contentItemsUrl)
+            .query(filterFor(contentType))
+            .auth(unirestAuthConfig)
+            .end(function (response) {
+                listCompletionHandler(response, callback);
+            });
     }
 
-    function fileSpecsFor(files) {
-        var fileSpecs = [];
-
-        for (var i = 0; i < files.length; i++) {
-            fileSpecs.push(fileSpecFor(files[i]));
+    function filterFor(contentType) {
+        if (contentType) {
+            return "filter={'metadata.contentType':'" + contentType + "'}";
         }
-
-        return fileSpecs;
+        return 'filter={}';
     }
 
-    function uploadCompletionHandler(error, apiResponse, callback) {
-
-        if (error) {
-            callback(error, null);
-
-        } else if (apiResponse.statusCode >= 400) {
-            error = new Error('Admin API error');
-            error.status = apiResponse.statusCode;
-            callback(error, null);
-
+    function listCompletionHandler(response, callback) {
+        if (response.error) {
+            logger.error('Get content items error ' + response.error);
+            callback(response.error, null);
         } else {
-            logger.info('admin API upload successful');
-            callback(null, apiResponse.statusCode);
-
+            logger.info('Get content items response ' + response.status);
+            callback(null, response.body);
         }
     }
 
@@ -76,30 +67,40 @@ module.exports = function HubAdminClient(appConfig, logger) {
         });
     }
 
-    function listCompletionHandler(response, callback) {
-        if (response.error) {
-            logger.error('Get content items error ' + response.error);
-            callback(response.error, null);
+    function fileSpecsFor(files) {
+        var fileSpecs = [];
+
+        for (var i = 0; i < files.length; i++) {
+            fileSpecs.push(fileSpecFor(files[i]));
+        }
+
+        return fileSpecs;
+    }
+
+    function fileSpecFor(file) {
+        return {
+            value: fs.createReadStream(file.path),
+            options: {
+                filename: file.name
+            }
+        };
+    }
+
+    function uploadCompletionHandler(error, apiResponse, callback) {
+
+        if (error) {
+            callback(error, null);
+
+        } else if (apiResponse.statusCode >= 400) {
+            error = new Error('Admin API error');
+            error.status = apiResponse.statusCode;
+            callback(error, null);
+
         } else {
-            logger.info('Get content items response ' + response.status);
-            callback(null, response.body);
-        }
-    }
+            logger.info('admin API upload successful');
+            callback(null, apiResponse.statusCode);
 
-    function filterFor(contentType) {
-        if (contentType) {
-            return "filter={'metadata.contentType':'" + contentType + "'}";
         }
-        return 'filter={}';
-    }
-
-    function getContentItems(contentType, callback) {
-        unirest.get(contentItemsUrl)
-            .query(filterFor(contentType))
-            .auth(unirestAuthConfig)
-            .end(function (response) {
-                listCompletionHandler(response, callback);
-            });
     }
 
     return {
