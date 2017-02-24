@@ -106,4 +106,10 @@ describe('Server route config: ', function () {
             .expect(404, done);
     });
 
+    it('gives 200 on /health', function (done) {
+        request(server)
+            .get('/health')
+            .auth('user', 'password')
+            .expect(200, done);
+    });
 });
