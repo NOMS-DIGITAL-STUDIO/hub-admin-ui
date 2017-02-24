@@ -8,6 +8,8 @@ module.exports = function Routes(hubAdminClient, logger) {
 
     router.get('/', [listAll, contentList]);
 
+    router.get('/health', healthCheck);
+
     router.get('/prospectus', [listProspectus, prospectus]);
     router.post('/prospectus', [uploadFiles, listProspectus, prospectus]);
 
@@ -17,6 +19,9 @@ module.exports = function Routes(hubAdminClient, logger) {
     router.get('/book', [listBook, book]);
     router.post('/book', [uploadFiles, listBook, book]);
 
+    function healthCheck(req, res, next) {
+        res.sendStatus(200);
+    }
 
     function listAll(req, res, next) {
         list(req, res, '', next);
