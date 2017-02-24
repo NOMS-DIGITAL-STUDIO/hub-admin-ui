@@ -1,6 +1,5 @@
 var request = require('request');
 var unirest = require('unirest');
-var util = require('util');
 var fs = require('fs');
 
 
@@ -73,7 +72,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
         };
 
         request.post(postData, function complete(error, apiResponse, body) {
-            uploadCompletionHandler(error, apiResponse, callback)
+            uploadCompletionHandler(error, apiResponse, callback);
         });
     }
 

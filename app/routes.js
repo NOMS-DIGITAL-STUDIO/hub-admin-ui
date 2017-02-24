@@ -2,8 +2,6 @@ var express = require('express');
 var moment = require('moment');
 var formidable = require('formidable');
 
-var util = require('util');
-
 module.exports = function Routes(hubAdminClient, logger) {
 
     var router = express.Router();
@@ -88,7 +86,7 @@ module.exports = function Routes(hubAdminClient, logger) {
         });
 
         incomingForm.on('end', function () {
-            metadata['fileLabels'] = fileLabels;
+            metadata.fileLabels = fileLabels;
             hubAdminClient.upload(metadata, files, function (error, response) {
                 handleUploadResponse(error, res, next);
             });
