@@ -94,7 +94,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
     }
 
     function getContentItems(contentType, callback) {
-        unirest.get(appConfig.adminServerRoot + '/hub-admin/content-items')
+        unirest.get(contentItemsUrl)
             .query(filterFor(contentType))
             .auth(unirestAuthConfig)
             .end(function (response) {
