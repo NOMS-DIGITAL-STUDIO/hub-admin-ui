@@ -9,8 +9,8 @@
     <thead>
     <tr id="contentItemsTableHeader">
         <th scope="col">{{ contentType | capitalize }} title</th>
-        <th class="list-item" scope="col">Subject</th>
         <th class="list-item" scope="col">File name</th>
+        <th class="list-item" scope="col">Updated</th>
     </tr>
     </thead>
     <tbody>
@@ -18,8 +18,8 @@
     {% for item in contentItems %}
     <tr id="contentItem{{ loop.index0 }}">
         <td id="contentItem{{ loop.index0 }}-title">{{ item.metadata.title }}</td>
-        <td id="contentItem{{ loop.index0 }}-subject" class="list-item">{{ item.metadata.category }}</td>
         <td id="contentItem{{ loop.index0 }}-filename" class="list-item">{{ item.filename }}</td>
+        <td id="contentItem{{ loop.index0 }}-timestamp" class="list-item">{{ item.timestamp | date }}</td>
     </tr>
     {% else %}
     <tr>
