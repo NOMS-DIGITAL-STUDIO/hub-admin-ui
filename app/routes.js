@@ -19,6 +19,9 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
     router.get('/book', [listBook, book]);
     router.post('/book', [uploadFiles, listBook, book]);
 
+    router.get('/radio', [listRadio, radio]);
+    router.post('/radio', [uploadFiles, listRadio, radio]);
+
     function healthCheck(req, res, next) {
         var health = {
             'health': {
@@ -44,6 +47,10 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
 
     function listBook(req, res, next) {
         list(req, res, 'book', next);
+    }
+
+    function listRadio(req, res, next) {
+        list(req, res, 'radio', next);
     }
 
     function list(req, res, contentType, next) {
@@ -141,6 +148,13 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
 
     function book(req, res) {
         res.status(200).render('book', {
+            'uploadDetails': res.resultJson,
+            'contentItems': res.contentItems
+        });
+    }
+
+    function radio(req, res) {
+        res.status(200).render('radio', {
             'uploadDetails': res.resultJson,
             'contentItems': res.contentItems
         });

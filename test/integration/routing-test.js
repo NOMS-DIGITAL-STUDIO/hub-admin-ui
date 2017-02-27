@@ -99,6 +99,27 @@ describe('Server route config: ', function () {
             });
     });
 
+    it('responds to /radio with the radio page', function (done) {
+
+        var filter = "filter=%7B%27metadata.contentType%27:%27radio%27%7D";
+
+        var listRadios = nock('http://localhost:8080')
+            .get('/hub-admin/content-items?' + filter)
+            .reply(200, {});
+
+        request(server)
+            .get('/radio')
+            .auth('user', 'password')
+            .end(function (err, res) {
+                expect(res.text).to.have.string('Upload Radio file');
+                expect(res.status).to.equal(200);
+
+                expect(listRadios.isDone()).to.be.true;
+
+                done();
+            });
+    });
+
     it('gives 404 when not found', function (done) {
         request(server)
             .get('/foo/bar')

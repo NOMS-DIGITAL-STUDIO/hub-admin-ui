@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+Upload - Radio
+{% endblock %}
+
+{% block content %}
+{% set contentType="radio show" %}
+
+<main id="content" role="main">
+    {% include "includes/phase_banner_alpha.html" %}
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+
+            <div class="form-group" id="#navigation-all-content">
+                <a href="/" class="link-back" value="content-list" id="all-content">All Content</a>
+            </div>
+
+            <div class="error-summary js-hidden" role="group" aria-labelledby="error-summary-heading-example-2"
+                 tabindex="-1">
+                <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-2">
+                    Please check the following areas
+                </h1>
+                <p>One or more errors have occurred while trying to save your progress</p>
+                <ul class="error-summary-list">
+                    <li><a href="#title-book">Not including the title of a radio show</a></li>
+                    <li><a href="#file-upload">Uploading a file that's too large</a></li>
+                </ul>
+            </div>
+
+
+            <form action="" method="post" class="form" enctype="multipart/form-data" name="upload">
+                <input class="form-control" id="contentType" name="contentType" type="hidden" value="radio">
+
+                <h3 class="heading-medium">Radio</h3>
+
+                <div class="form-group" id="#title-book">
+                    <legend id="file-upload">
+                        <label class="form-label-bold" for="title">Title</label>
+                    </legend>
+                    <span class="form-hint">For example, ‘Episode One’.</span>
+
+                    <input class="form-control" id="title" type="text" name="title">
+                </div>
+
+                <div class="form-group" id="#list-channel">
+                    <label class="form-label-bold" for="channel">Channel</label>
+                    <span class="form-hint">Select the channel to which the show belongs.</span>
+                    <select class="form-control" id="channel" name="channel">
+                        <option>Bob and Beyond</option>
+                        <option>Books Unlocked</option>
+                        <option>Check Up</option>
+                        <option>Freedom Inside</option>
+                        <option>Hot 20</option>
+                        <option>NPR Friday</option>
+                        <option>Past, Present and Future</option>
+                        <option>Porridge</option>
+                        <option>Prime Time</option>
+                        <option>Prison News</option>
+                        <option>Rock Show</option>
+                        <option>Straightline</option>
+                        <option>Takeover</option>
+                        <option>TV Guide</option>
+                        <option>Work It</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="#duration">
+                    <label class="form-label-bold">Radio show length</label>
+
+                    <div class="duration" id="#radio-length-hours">
+                        <span class="form-hint">Hours</span>
+                        <input class="form-control" id="lengthHours" type="text">
+                    </div>
+
+                    <div class="duration" id="#radio-length-minutes">
+                        <span class="form-hint">Minutes</span>
+                        <input class="form-control" id="lengthMinutes" type="text">
+                    </div>
+
+                    <div class="duration" id="#video-length-seconds">
+                        <span class="form-hint">Seconds</span>
+                        <input class="form-control" id="lengthSeconds" type="text">
+                    </div>
+
+                    <input class="form-control" id="radioLength" name="radioLength" type="hidden">
+                </div>
+
+                <div class="form-group" id="#file-upload">
+                    <label class="form-label-bold" for="mainFile">Upload Radio file</label>
+                    <span class="form-hint">This should be in mp3 format and no larger than 5MB.</span>
+                    <input type="file" id="mainFile" name="main">
+                </div>
+
+                <div class="form-group">
+                    <input class="button" type="submit" value="Save" id="upload">
+
+                  {% if uploadDetails.success %}
+                    <h4 id="uploadSuccess" class="success">Saved successfully</h4>
+                    <p id="uploadSuccessNotes" class="font-xsmall">{{ uploadDetails.timestamp }}</p>
+                  {% endif %}
+                </div>
+
+            </form>
+        </div>
+
+        <div class="column-full">
+            {% include "components/content_items_table.html" %}
+        </div>
+
+    </div>
+
+</main>
+{% endblock %}
