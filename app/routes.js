@@ -12,13 +12,19 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
     router.get('/health', healthCheck);
 
     router.get('/prospectus', [listProspectus, prospectus]);
+    router.get('/prospectus/:id', [loadItem, listProspectus, prospectus]);
     router.post('/prospectus', [uploadFiles, listProspectus, prospectus]);
+    router.post('/prospectus/:id', [updateItem, loadItem, listProspectus, prospectus]);
 
     router.get('/video', [listVideo, video]);
+    router.get('/video/:id', [loadItem, listVideo, video]);
     router.post('/video', [uploadFiles, listVideo, video]);
+    router.post('/video/:id', [updateItem, loadItem, listVideo, video]);
 
     router.get('/book', [listBook, book]);
+    router.get('/book/:id', [loadItem, listBook, book]);
     router.post('/book', [uploadFiles, listBook, book]);
+    router.post('/book/:id', [updateItem, loadItem, listBook, book]);
 
     router.get('/radio', [listRadio, radio]);
     router.get('/radio/:id', [loadItem, listRadio, radio]);
@@ -184,21 +190,24 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
     function prospectus(req, res) {
         res.status(200).render('prospectus', {
             'uploadDetails': res.resultJson,
-            'contentItems': res.contentItems
+            'contentItems': res.contentItems,
+            'originalItem': res.originalItem
         });
     }
 
     function video(req, res) {
         res.status(200).render('video', {
             'uploadDetails': res.resultJson,
-            'contentItems': res.contentItems
+            'contentItems': res.contentItems,
+            'originalItem': res.originalItem
         });
     }
 
     function book(req, res) {
         res.status(200).render('book', {
             'uploadDetails': res.resultJson,
-            'contentItems': res.contentItems
+            'contentItems': res.contentItems,
+            'originalItem': res.originalItem
         });
     }
 

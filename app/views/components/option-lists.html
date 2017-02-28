@@ -1,0 +1,55 @@
+{% set subjectList = [
+'Distance Learning',
+'Art and Literature',
+'Business and Economics',
+'Counselling and Psychology',
+'English',
+'Environmental Studies',
+'Foreign Languages',
+'History',
+'Law and Politics',
+'Maths',
+'Philosophy',
+'Science',Sociology'] %}
+
+{% macro subjects(selected) %}
+{% for subject in subjectList %}
+<option {% if selected==subject %} selected="selected" {% endif %}>{{subject}}</option>
+{% endfor %}
+{% endmacro %}
+
+
+{% set channelList = [
+'Bob and Beyond',
+'Books Unlocked',
+'Check Up',
+'Freedom Inside',
+'Hot 20',
+'NPR Friday',
+'Past',
+'Present and Future',
+'Porridge',
+'Prime Time',
+'Prison News',
+'Rock Show',
+'Straightline',
+'Takeover',
+'TV Guide',
+'Work It']%}}
+
+{% macro channels(selected) %}
+{% for channel in channelList %}
+<option {% if selected==channel %} selected="selected" {% endif %}>{{channel}}</option>
+{% endfor %}
+{% endmacro %}
+
+
+{% set providerList = [
+'National Extension College',
+'Shannon Trust'] %}}
+
+{% macro providers(selected) %}
+{% for provider in providerList %}
+<option {% if selected==provider %} selected="selected" {% endif %}>{{provider}}</option>
+{% endfor %}
+{% endmacro %}

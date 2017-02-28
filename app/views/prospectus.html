@@ -7,6 +7,8 @@ Upload - Prospectus
 {% block content %}
 {% set contentType="prospectus" %}
 
+{% import "components/option-lists.html" as options %}
+
 <main id="content" role="main">
     {% include "includes/phase_banner_alpha.html" %}
 
@@ -29,7 +31,6 @@ Upload - Prospectus
                 </ul>
             </div>
 
-
             <form action="" method="post" class="form" enctype="multipart/form-data" name="upload" id="upload-form">
                 <input class="form-control" id="contentType" name="contentType" type="hidden" value="{{ contentType }}">
 
@@ -41,26 +42,14 @@ Upload - Prospectus
                     </legend>
                     <span class="form-hint">For example, ‘Maths Module 1: Learning about numbers’.</span>
 
-                    <input class="form-control" id="title" type="text" name="title">
+                    <input class="form-control" id="title" type="text" name="title" value="{{originalItem.metadata.title}}">
                 </div>
 
                 <div class="form-group" id="#list-category">
                     <label class="form-label-bold" for="category">Subject</label>
                     <span class="form-hint">Select the subject that the prospectus is from.</span>
                     <select class="form-control" id="category" name="category">
-                        <option>Distance Learning</option>
-                        <option>Art and Literature</option>
-                        <option>Business and Economics</option>
-                        <option>Counselling and Psychology</option>
-                        <option>English</option>
-                        <option>Environmental Studies</option>
-                        <option>Foreign Languages</option>
-                        <option>History</option>
-                        <option>Law and Politics</option>
-                        <option>Maths</option>
-                        <option>Philosophy</option>
-                        <option>Science</option>
-                        <option>Sociology</option>
+                        {{options.subjects(originalItem.metadata.category)}}
                     </select>
                 </div>
 
@@ -68,16 +57,20 @@ Upload - Prospectus
                     <label class="form-label-bold" for="provider">Provider</label>
                     <span class="form-hint">Select the organisation that provided the prospectus.</span>
                     <select class="form-control" id="provider" name="provider">
-                        <option>National Extension College</option>
-                        <option>Shannon Trust</option>
+                        {{options.providers(originalItem.metadata.provider)}}
                     </select>
                 </div>
 
+                {% if originalItem %}
+                <input class="form-control" id="originalItem" name="originalItem" type="hidden" value="{{originalItem | dump}}">
+                <p>You are editing: <span class="success">{{originalItem.filename}}</span></p>
+                {% else %}
                 <div class="form-group" id="#file-upload">
                     <label class="form-label-bold" for="mainFile">Upload prospectus file</label>
                     <span class="form-hint">This should be in a PDF format and no larger than 5MB.</span>
                     <input type="file" id="mainFile" name="main">
                 </div>
+                {% endif %}
 
                 <div class="form-group">
                     <input class="button" type="submit" value="Save" id="upload">

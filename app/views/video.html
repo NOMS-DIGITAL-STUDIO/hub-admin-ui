@@ -7,6 +7,8 @@ Upload - Video
 {% block content %}
 {% set contentType="video" %}
 
+{% import "components/option-lists.html" as options %}
+
 <main id="content" role="main">
     {% include "includes/phase_banner_alpha.html" %}
 
@@ -29,7 +31,6 @@ Upload - Video
                 </ul>
             </div>
 
-
             <form action="" method="post" class="form" enctype="multipart/form-data" name="upload" id="upload-form">
                 <input class="form-control" id="contentType" name="contentType" type="hidden" value="{{ contentType }}">
 
@@ -41,59 +42,55 @@ Upload - Video
                     </legend>
                     <span class="form-hint">For example, ‘Understanding Your Emotions’.</span>
 
-                    <input class="form-control" id="title" type="text" name="title">
+                    <input class="form-control" id="title" type="text" name="title" value="{{originalItem.metadata.title}}">
                 </div>
 
-                <div class="form-group, description-video" id="#description-video">
+                <div class="form-group, description" id="#description-video">
                     <legend id="description-legend">
                         <label class="form-label-bold" for="title">Description</label>
                     </legend>
                     <span class="form-hint">Explain what the video is about.</span>
 
-                    <textarea class="form-control" rows="4" id="description" name="description" type="text"></textarea>
+                    <textarea class="form-control" rows="4" id="description" name="description" type="text">{{originalItem.metadata.description}}</textarea>
                 </div>
 
                 <div class="form-group" id="#list-category">
                     <label class="form-label-bold" for="category">Category</label>
                     <span class="form-hint">Select the category of the video. <br>For example: A video about algebra would be in the 'Maths' category.</span>
                     <select class="form-control" id="category" name="category">
-                        <option>Distance Learning</option>
-                        <option>Art and Literature</option>
-                        <option>Business and Economics</option>
-                        <option>Counselling and Psychology</option>
-                        <option>English</option>
-                        <option>Environmental Studies</option>
-                        <option>Foreign Languages</option>
-                        <option>History</option>
-                        <option>Law and Politics</option>
-                        <option>Maths</option>
-                        <option>Philosophy</option>
-                        <option>Science</option>
-                        <option>Sociology</option>
+                        {{options.subjects(originalItem.metadata.category)}}
                     </select>
                 </div>
+
+                {% if originalItem.metadata.videoLength %}
+                {% set durationParts=originalItem.metadata.videoLength.split(':') %}
+                {% endif %}
 
                 <div class="form-group" id="#duration">
                     <label class="form-label-bold">Video length</label>
 
                     <div class="duration" id="#video-length-hours">
                         <span class="form-hint">Hours</span>
-                        <input class="form-control" id="lengthHours" type="text">
+                        <input class="form-control" id="lengthHours" type="text" value="{{durationParts[0]}}">
                     </div>
 
                     <div class="duration" id="#video-length-minutes">
                         <span class="form-hint">Minutes</span>
-                        <input class="form-control" id="lengthMinutes" type="text">
+                        <input class="form-control" id="lengthMinutes" type="text" value="{{durationParts[1]}}">
                     </div>
 
                     <div class="duration" id="#video-length-seconds">
                         <span class="form-hint">Seconds</span>
-                        <input class="form-control" id="lengthSeconds" type="text">
+                        <input class="form-control" id="lengthSeconds" type="text" value="{{durationParts[2]}}">
                     </div>
 
                     <input class="form-control" id="videoLength" name="videoLength" type="hidden">
                 </div>
 
+                {% if originalItem %}
+                <input class="form-control" id="originalItem" name="originalItem" type="hidden" value="{{originalItem | dump}}">
+                <p>You are editing: <span class="success">{{originalItem.filename}}</span></p>
+                {% else %}
                 <div class="form-group" id="#file-upload">
                     <label class="form-label-bold" for="mainFile">Upload video file</label>
                     <span class="form-hint">The format should be MP4.</span>
@@ -105,6 +102,7 @@ Upload - Video
                     <span class="form-hint">The format should be JPG.</span>
                     <input type="file" id="thumbnailFile" name="thumbnail">
                 </div>
+                {% endif %}
 
                 <div class="form-group">
                     <input class="button" type="submit" value="Save" id="upload">

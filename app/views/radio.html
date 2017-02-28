@@ -7,6 +7,8 @@ Upload - Radio
 {% block content %}
 {% set contentType="radio show" %}
 
+{% import "components/option-lists.html" as options %}
+
 <main id="content" role="main">
     {% include "includes/phase_banner_alpha.html" %}
 
@@ -40,7 +42,6 @@ Upload - Radio
                     </legend>
                     <span class="form-hint">For example, ‘Episode One’.</span>
 
-
                     <input class="form-control" id="title" type="text" name="title" value="{{originalItem.metadata.title}}">
                 </div>
 
@@ -48,21 +49,7 @@ Upload - Radio
                     <label class="form-label-bold" for="channel">Channel</label>
                     <span class="form-hint">Select the channel to which the show belongs.</span>
                     <select class="form-control" id="channel" name="channel">
-                        <option {% if originalItem.metadata.channel == 'Bob and Beyond' %} selected="selected"{% endif %}>Bob and Beyond</option>
-                        <option {% if originalItem.metadata.channel == 'Books Unlocked' %} selected="selected"{% endif %}>Books Unlocked</option>
-                        <option {% if originalItem.metadata.channel == 'Check Up' %} selected="selected"{% endif %}>Check Up</option>
-                        <option {% if originalItem.metadata.channel == 'Freedom Inside' %} selected="selected"{% endif %}>Freedom Inside</option>
-                        <option {% if originalItem.metadata.channel == 'Hot 20' %} selected="selected"{% endif %}>Hot 20</option>
-                        <option {% if originalItem.metadata.channel == 'NPR Friday' %} selected="selected"{% endif %}>NPR Friday</option>
-                        <option {% if originalItem.metadata.channel == 'Past, Present and Future' %} selected="selected"{% endif %}>Past, Present and Future</option>
-                        <option {% if originalItem.metadata.channel == 'Porridge' %} selected="selected"{% endif %}>Porridge</option>
-                        <option {% if originalItem.metadata.channel == 'Prime Time' %} selected="selected"{% endif %}>Prime Time</option>
-                        <option {% if originalItem.metadata.channel == 'Prison News' %} selected="selected"{% endif %}>Prison News</option>
-                        <option {% if originalItem.metadata.channel == 'Rock Show' %} selected="selected"{% endif %}>Rock Show</option>
-                        <option {% if originalItem.metadata.channel == 'Straightline' %} selected="selected"{% endif %} >Straightline</option>
-                        <option {% if originalItem.metadata.channel == 'Takeover' %} selected="selected"{% endif %}>Takeover</option>
-                        <option {% if originalItem.metadata.channel == 'TV Guide' %} selected="selected"{% endif %}>TV Guide</option>
-                        <option {% if originalItem.metadata.channel == 'Work It' %} selected="selected"{% endif %}>Work It</option>
+                        {{options.channels(originalItem.metadata.channel)}}
                     </select>
                 </div>
 
@@ -94,7 +81,7 @@ Upload - Radio
 
                 {% if originalItem %}
                     <input class="form-control" id="originalItem" name="originalItem" type="hidden" value="{{originalItem | dump}}">
-                <p>You are editing: <span class="success">{{originalItem.filename}}</span></p>
+                    <p>You are editing: <span class="success">{{originalItem.filename}}</span></p>
                 {% else %}
                 <div class="form-group" id="#file-upload">
                     <label class="form-label-bold" for="mainFile">Upload Radio file</label>
