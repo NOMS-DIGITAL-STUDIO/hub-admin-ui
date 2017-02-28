@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+Create Content
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+    {% include "includes/phase_banner_alpha.html" %}
+    <div class="grid-row">
+        <div class="column-full">
+
+            <h3 class="heading-medium">Create content by type</h3>
+            <ul>
+                <li><a href="/prospectus">Create a Prospectus</a></li>
+                <li><a href="/video">Create a Video</a></li>
+                <li><a href="/radio">Create a Radio Show</a></li>
+                <li><a href="/book">Create an eBook</a></li>
+            </ul>
+
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -7,9 +7,13 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
 
     var router = express.Router();
 
+    router.get('/health', healthCheck);
+
     router.get('/', [listAll, contentList]);
 
-    router.get('/health', healthCheck);
+    router.get('/create-content', function (req, res, next) {
+        res.render('create-content');
+    });
 
     router.get('/prospectus', [listProspectus, prospectus]);
     router.get('/prospectus/:id', [loadItem, listProspectus, prospectus]);
@@ -155,7 +159,7 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
         }
     }
 
-    function updateItem(req, res, next){
+    function updateItem(req, res, next) {
 
         var incomingForm = new formidable.IncomingForm();
 
@@ -163,7 +167,7 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
         var item = {};
 
         incomingForm.on('field', function (field, value) {
-            if( field == 'originalItem'){
+            if (field == 'originalItem') {
                 item = JSON.parse(value);
             } else {
                 newMetadata[field] = value;
@@ -219,7 +223,7 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
         });
     }
 
-    function redirectHome(req, res){
+    function redirectHome(req, res) {
         res.redirect('/');
     }
 
