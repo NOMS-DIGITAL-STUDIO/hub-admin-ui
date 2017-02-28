@@ -103,9 +103,54 @@ module.exports = function HubAdminClient(appConfig, logger) {
         }
     }
 
+    function findById(id, callback){
+
+        logger.info('Finding item by id: ' + id);
+
+        unirest.get(contentItemsUrl + "/" + id)
+            .auth(unirestAuthConfig)
+            .end(function (response) {
+                findCompletionHandler(response, callback);
+            });
+    }
+
+    function findCompletionHandler(response, callback) {
+        if (response.error) {
+            logger.error('Find by id error ' + response.error);
+            callback(response.error, null);
+        } else {
+            logger.info('Find by id response ' + response.status);
+            callback(null, response.body);
+        }
+    }
+
+    function updateById(id, contentItem, callback){
+
+        logger.info('Updating item by id: ' + id);
+        unirest.put(contentItemsUrl + "/" + id)
+            .auth(unirestAuthConfig)
+            .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+            .send(contentItem)
+            .end(function (response) {
+                updateCompletionHandler(response, callback);
+            });
+    }
+
+    function updateCompletionHandler(response, callback) {
+        if (response.error) {
+            logger.error('Update by id error ' + response.error);
+            callback(response.error, null);
+        } else {
+            logger.info('Update by id response ' + response.status);
+            callback(null, response.status);
+        }
+    }
+
     return {
         upload: upload,
-        list: getContentItems
+        list: getContentItems,
+        findById: findById,
+        updateById: updateById
     };
 }
 ;

@@ -17,7 +17,7 @@
 
     {% for item in contentItems %}
     <tr id="contentItem{{ loop.index0 }}">
-        <td id="contentItem{{ loop.index0 }}-title">{{ item.metadata.title }}</td>
+        <td id="contentItem{{ loop.index0 }}-title"><a href="/{{item.metadata.contentType}}/{{item.id}}">{{ item.metadata.title }}</a></td>
         <td id="contentItem{{ loop.index0 }}-filename" class="list-item">{{ item.filename }}</td>
         <td id="contentItem{{ loop.index0 }}-timestamp" class="list-item">{{ item.timestamp | date }}</td>
     </tr>

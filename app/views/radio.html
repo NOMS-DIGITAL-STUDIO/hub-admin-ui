@@ -29,8 +29,7 @@ Upload - Radio
                 </ul>
             </div>
 
-
-            <form action="" method="post" class="form" enctype="multipart/form-data" name="upload">
+            <form action="" method="post" class="form" enctype="multipart/form-data" name="upload" id="upload-form">
                 <input class="form-control" id="contentType" name="contentType" type="hidden" value="radio">
 
                 <h3 class="heading-medium">Radio</h3>
@@ -41,57 +40,68 @@ Upload - Radio
                     </legend>
                     <span class="form-hint">For example, ‘Episode One’.</span>
 
-                    <input class="form-control" id="title" type="text" name="title">
+
+                    <input class="form-control" id="title" type="text" name="title" value="{{originalItem.metadata.title}}">
                 </div>
 
                 <div class="form-group" id="#list-channel">
                     <label class="form-label-bold" for="channel">Channel</label>
                     <span class="form-hint">Select the channel to which the show belongs.</span>
                     <select class="form-control" id="channel" name="channel">
-                        <option>Bob and Beyond</option>
-                        <option>Books Unlocked</option>
-                        <option>Check Up</option>
-                        <option>Freedom Inside</option>
-                        <option>Hot 20</option>
-                        <option>NPR Friday</option>
-                        <option>Past, Present and Future</option>
-                        <option>Porridge</option>
-                        <option>Prime Time</option>
-                        <option>Prison News</option>
-                        <option>Rock Show</option>
-                        <option>Straightline</option>
-                        <option>Takeover</option>
-                        <option>TV Guide</option>
-                        <option>Work It</option>
+                        <option {% if originalItem.metadata.channel == 'Bob and Beyond' %} selected="selected"{% endif %}>Bob and Beyond</option>
+                        <option {% if originalItem.metadata.channel == 'Books Unlocked' %} selected="selected"{% endif %}>Books Unlocked</option>
+                        <option {% if originalItem.metadata.channel == 'Check Up' %} selected="selected"{% endif %}>Check Up</option>
+                        <option {% if originalItem.metadata.channel == 'Freedom Inside' %} selected="selected"{% endif %}>Freedom Inside</option>
+                        <option {% if originalItem.metadata.channel == 'Hot 20' %} selected="selected"{% endif %}>Hot 20</option>
+                        <option {% if originalItem.metadata.channel == 'NPR Friday' %} selected="selected"{% endif %}>NPR Friday</option>
+                        <option {% if originalItem.metadata.channel == 'Past, Present and Future' %} selected="selected"{% endif %}>Past, Present and Future</option>
+                        <option {% if originalItem.metadata.channel == 'Porridge' %} selected="selected"{% endif %}>Porridge</option>
+                        <option {% if originalItem.metadata.channel == 'Prime Time' %} selected="selected"{% endif %}>Prime Time</option>
+                        <option {% if originalItem.metadata.channel == 'Prison News' %} selected="selected"{% endif %}>Prison News</option>
+                        <option {% if originalItem.metadata.channel == 'Rock Show' %} selected="selected"{% endif %}>Rock Show</option>
+                        <option {% if originalItem.metadata.channel == 'Straightline' %} selected="selected"{% endif %} >Straightline</option>
+                        <option {% if originalItem.metadata.channel == 'Takeover' %} selected="selected"{% endif %}>Takeover</option>
+                        <option {% if originalItem.metadata.channel == 'TV Guide' %} selected="selected"{% endif %}>TV Guide</option>
+                        <option {% if originalItem.metadata.channel == 'Work It' %} selected="selected"{% endif %}>Work It</option>
                     </select>
                 </div>
+
+                {% if originalItem.metadata.radioLength %}
+                    {% set durationParts=originalItem.metadata.radioLength.split(':') %}
+                {% endif %}
 
                 <div class="form-group" id="#duration">
                     <label class="form-label-bold">Radio show length</label>
 
                     <div class="duration" id="#radio-length-hours">
                         <span class="form-hint">Hours</span>
-                        <input class="form-control" id="lengthHours" type="text">
+                        <input class="form-control" id="lengthHours" type="text" value="{{durationParts[0]}}">
                     </div>
 
                     <div class="duration" id="#radio-length-minutes">
                         <span class="form-hint">Minutes</span>
-                        <input class="form-control" id="lengthMinutes" type="text">
+                        <input class="form-control" id="lengthMinutes" type="text" value="{{durationParts[1]}}">
                     </div>
 
                     <div class="duration" id="#video-length-seconds">
                         <span class="form-hint">Seconds</span>
-                        <input class="form-control" id="lengthSeconds" type="text">
+                        <input class="form-control" id="lengthSeconds" type="text" value="{{durationParts[2]}}">
                     </div>
 
                     <input class="form-control" id="radioLength" name="radioLength" type="hidden">
+
                 </div>
 
+                {% if originalItem %}
+                    <input class="form-control" id="originalItem" name="originalItem" type="hidden" value="{{originalItem | dump}}">
+                <p>You are editing: <span class="success">{{originalItem.filename}}</span></p>
+                {% else %}
                 <div class="form-group" id="#file-upload">
                     <label class="form-label-bold" for="mainFile">Upload Radio file</label>
                     <span class="form-hint">This should be in mp3 format and no larger than 5MB.</span>
                     <input type="file" id="mainFile" name="main">
                 </div>
+                {% endif %}
 
                 <div class="form-group">
                     <input class="button" type="submit" value="Save" id="upload">

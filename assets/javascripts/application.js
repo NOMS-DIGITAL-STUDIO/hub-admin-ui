@@ -22,8 +22,8 @@ $(document).ready(function () {
 
     $('#upload-form').submit(function () {
         var duration = $('#lengthHours').val() + ':' + $('#lengthMinutes').val() + ':' + $('#lengthSeconds').val();
-        $('#videoLength').val(duration)
-        $('#radioLength').val(duration)
+        $('#videoLength').val(duration);
+        $('#radioLength').val(duration);
     });
 });
 

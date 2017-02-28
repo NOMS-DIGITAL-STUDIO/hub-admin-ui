@@ -1,6 +1,7 @@
 var express = require('express');
 var moment = require('moment');
 var formidable = require('formidable');
+var util = require('util');
 
 module.exports = function Routes(appConfig, hubAdminClient, logger) {
 
@@ -20,7 +21,9 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
     router.post('/book', [uploadFiles, listBook, book]);
 
     router.get('/radio', [listRadio, radio]);
+    router.get('/radio/:id', [loadItem, listRadio, radio]);
     router.post('/radio', [uploadFiles, listRadio, radio]);
+    router.post('/radio/:id', [updateItem, loadItem, listRadio, radio]);
 
     function healthCheck(req, res, next) {
         var health = {
@@ -126,6 +129,52 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
         };
     }
 
+    function loadItem(req, res, next) {
+        hubAdminClient.findById(req.params.id, function (error, response) {
+            handleFindResponse(error, response, res, next);
+        });
+    }
+
+    function handleFindResponse(error, response, res, next) {
+
+        if (error === null) {
+            logger.info('find item successful');
+            logger.info(response);
+            res.originalItem = response;
+            next();
+
+        } else {
+            logger.info('find item error');
+            next(error);
+        }
+    }
+
+    function updateItem(req, res, next){
+
+        var incomingForm = new formidable.IncomingForm();
+
+        var newMetadata = {};
+        var item = {};
+
+        incomingForm.on('field', function (field, value) {
+            if( field == 'originalItem'){
+                item = JSON.parse(value);
+            } else {
+                newMetadata[field] = value;
+            }
+        });
+
+        incomingForm.on('end', function () {
+            item.metadata = newMetadata;
+
+            hubAdminClient.updateById(req.params.id, item, function (error, response) {
+                handleUploadResponse(error, res, next);
+            });
+        });
+
+        incomingForm.parse(req);
+    }
+
     function contentList(req, res) {
         res.status(200).render('all-content-items', {
             'contentItems': res.contentItems
@@ -156,8 +205,13 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
     function radio(req, res) {
         res.status(200).render('radio', {
             'uploadDetails': res.resultJson,
-            'contentItems': res.contentItems
+            'contentItems': res.contentItems,
+            'originalItem': res.originalItem
         });
+    }
+
+    function redirectHome(req, res){
+        res.redirect('/');
     }
 
     return {
