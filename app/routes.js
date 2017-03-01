@@ -38,7 +38,7 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
     function healthCheck(req, res, next) {
         var health = {
             'health': {
-                'status': 'OK',
+                'status': 'UP',
                 'timestamp': moment().format('YYYY-MM-DD HH:mm'),
                 'version': appConfig.version
             }
@@ -67,9 +67,18 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
     }
 
     function list(req, res, contentType, next) {
-        getList(req, res, contentType, function (jsonData) {
-            res.contentItems = jsonData.contentItems;
-            return next();
+        getList(req, res, contentType, function (error, jsonData) {
+            if (error === null) {
+                res.contentItems = jsonData.contentItems;
+                return next();
+            } else {
+                if (error.code == 'ECONNREFUSED') {
+                    logger.error(util.inspect(error))
+                    error.message = 'Hub Admin API connection error'
+                }
+                logger.error('upload error');
+                next(error);
+            }
         });
     }
 
@@ -83,10 +92,9 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
         if (error === null) {
             logger.info('get list successful');
             logger.debug('get items response: ' + JSON.stringify(jsonData));
-            callback(jsonData);
+            callback(null, jsonData);
         } else {
-            logger.error('Get list error: ' + error);
-            callback(error);
+            callback(error, null);
         }
     }
 
@@ -127,7 +135,7 @@ module.exports = function Routes(appConfig, hubAdminClient, logger) {
             next();
 
         } else {
-            logger.info('upload error');
+            logger.error('upload error');
             next(error);
         }
     }

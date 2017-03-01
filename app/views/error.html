@@ -8,19 +8,18 @@ Hub Admin UI
 
 <main id="content" role="main">
     <div class="grid-row">
-        <div class="column-two-thirds">
+        <div class="column-full">
 
-            <h1 class="heading-xlarge">
-                Error
+            <h1 class="heading-xlarge">Error</h1>
                 <h2 class="heading-large">There was an error</h2>
 
-                <p>
-                {{error.status}} {{ message }}
-                </p>
+                <p>Something went wrong or wasn't finished when the project was stopped.</p>
 
-                <p class="code">
-                {{ error.stack }}
-                </p>
+                <h3>Message</h3>
+                <p class="code">{{error.status}} {{ message }}</p>
+
+                <h3>Developer mode detail</h3>
+                <p class="code">{{ error.stack }}</p>
 
         </div>
     </div>
