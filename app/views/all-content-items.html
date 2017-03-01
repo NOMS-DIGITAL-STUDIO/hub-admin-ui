@@ -25,6 +25,7 @@ All Content
                     <th scope="col">Title</th>
                     <th class="list-item" scope="col">Content Type</th>
                     <th class="list-item" scope="col">Updated</th>
+                    <th class="list-item" scope="col">Status</th>
                     <th class="list-item" scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -36,11 +37,12 @@ All Content
                     <td id="contentItem{{ loop.index0 }}-title">{{ item.metadata.title }}</td>
                     <td id="contentItem{{ loop.index0 }}-content-type" class="list-item">{{ item.metadata.contentType | capitalize }}</td>
                     <td id="contentItem{{ loop.index0 }}-timestamp" class="list-item">{{ item.timestamp | date }}</td>
+                    <td id="contentItem{{ loop.index0 }}-status" class="list-item">{% if item.metadata.published %}Published{%else%}Unpublished{%endif%}</td>
                     <td id="contentItem{{ loop.index0 }}-actions" class="list-item"><a href="/{{item.metadata.contentType}}/{{item.id}}">Edit</a></td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="4">No previous uploads</td>
+                    <td colspan="5">No previous uploads</td>
                 </tr>
                 {% endfor %}
 

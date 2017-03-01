@@ -42,7 +42,8 @@ Upload - Video
                     </legend>
                     <span class="form-hint">For example, ‘Understanding Your Emotions’.</span>
 
-                    <input class="form-control" id="title" type="text" name="title" value="{{originalItem.metadata.title}}">
+                    <input class="form-control" id="title" type="text" name="title"
+                           value="{{originalItem.metadata.title}}">
                 </div>
 
                 <div class="form-group, description" id="#description-video">
@@ -96,7 +97,8 @@ Upload - Video
                 </div>
 
                 {% if originalItem %}
-                <input class="form-control" id="originalItem" name="originalItem" type="hidden" value="{{originalItem | dump}}">
+                <input class="form-control" id="originalItem" name="originalItem" type="hidden"
+                       value="{{originalItem | dump}}">
                 <p>You are editing: <span class="success">{{originalItem.filename}}</span></p>
                 {% else %}
                 <div class="form-group" id="#file-upload">
@@ -111,6 +113,18 @@ Upload - Video
                     <input type="file" id="thumbnailFile" name="thumbnail">
                 </div>
                 {% endif %}
+
+                <div class="form-group" id="#published">
+                    <label class="form-label-bold">Status</label>
+                    <label for="published" class="block-label selection-button-checkbox">
+                        {% if originalItem.metadata.published %}
+                        <input type="checkbox" name="published" value="true" id="published" checked>
+                        {% else %}
+                        <input type="checkbox" name="published" value="true" id="published">
+                        {% endif %}
+                        Published
+                    </label>
+                </div>
 
                 <div class="form-group">
                     <input class="button" type="submit" value="Save" id="upload">

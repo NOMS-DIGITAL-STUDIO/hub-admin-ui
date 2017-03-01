@@ -72,6 +72,18 @@ Upload - Prospectus
                 </div>
                 {% endif %}
 
+                <div class="form-group" id="#published">
+                    <label class="form-label-bold">Status</label>
+                    <label for="published" class="block-label selection-button-checkbox">
+                        {% if originalItem.metadata.published %}
+                        <input type="checkbox" name="published" value="true" id="published" checked>
+                        {% else %}
+                        <input type="checkbox" name="published" value="true" id="published">
+                        {% endif %}
+                        Published
+                    </label>
+                </div>
+
                 <div class="form-group">
                     <input class="button" type="submit" value="Save" id="upload">
 
