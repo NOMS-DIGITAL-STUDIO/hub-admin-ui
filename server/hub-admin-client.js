@@ -48,6 +48,7 @@ module.exports = function HubAdminClient(appConfig, logger) {
     function upload(metadata, files, callback) {
 
         logger.info('Commencing file upload');
+        logger.info(metadata);
 
         var formData = {
             metadata: JSON.stringify(metadata),
