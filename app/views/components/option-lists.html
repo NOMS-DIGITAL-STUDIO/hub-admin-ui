@@ -10,7 +10,8 @@
 'Law and Politics',
 'Maths',
 'Philosophy',
-'Science',Sociology'] %}
+'Science',
+'Sociology'] %}
 
 {% macro subjects(selected) %}
 {% for subject in subjectList %}
@@ -53,3 +54,19 @@
 <option {% if selected==provider %} selected="selected" {% endif %}>{{provider}}</option>
 {% endfor %}
 {% endmacro %}
+
+{% set videoProviderList = [
+'Feature Films',
+'Koestler Trust',
+'Prison Video Trust',
+'Shannon Trust',
+'Straightline',
+'TED Talks',
+'Way2Learn'] %}}
+
+{% macro videoProviders(selected) %}
+{% for provider in videoProviderList %}
+<option {% if selected==provider %} selected="selected" {% endif %}>{{provider}}</option>
+{% endfor %}
+{% endmacro %}
+
