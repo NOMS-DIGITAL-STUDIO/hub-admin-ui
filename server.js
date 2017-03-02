@@ -10,7 +10,7 @@ var nunjucks = require('nunjucks');
 
 // Configuration
 var appConfig = {
-    'adminServerRoot': process.env.ADMIN_SERVER_ROOT || 'http://localhost:8080',
+    'adminServerRoot': process.env.ADMIN_SERVER_ROOT || 'http://localhost:8090',
     'userName': process.env.USER_NAME || 'user',
     'password': process.env.PASSWORD || 'password',
     'logLevel': process.env.LOG_LEVEL || 'info',

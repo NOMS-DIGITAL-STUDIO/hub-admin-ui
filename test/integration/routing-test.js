@@ -19,7 +19,7 @@ describe('Server route config: ', function () {
 
         var filter = "filter=%7B%7D";
 
-        var listAllContent = nock('http://localhost:8080')
+        var listAllContent = nock('http://localhost:8090')
             .get('/hub-admin/content-items?' + filter)
             .reply(200, {});
 
@@ -40,7 +40,7 @@ describe('Server route config: ', function () {
 
         var filter = "filter=%7B%27metadata.contentType%27:%27prospectus%27%7D";
 
-        var listPdfs = nock('http://localhost:8080')
+        var listPdfs = nock('http://localhost:8090')
             .get('/hub-admin/content-items?' + filter)
             .reply(200, {});
 
@@ -61,7 +61,7 @@ describe('Server route config: ', function () {
 
         var filter = "filter=%7B%27metadata.contentType%27:%27video%27%7D";
 
-        var listVideos = nock('http://localhost:8080')
+        var listVideos = nock('http://localhost:8090')
             .get('/hub-admin/content-items?' + filter)
             .reply(200, {});
 
@@ -82,7 +82,7 @@ describe('Server route config: ', function () {
 
         var filter = "filter=%7B%27metadata.contentType%27:%27book%27%7D";
 
-        var listBooks = nock('http://localhost:8080')
+        var listBooks = nock('http://localhost:8090')
             .get('/hub-admin/content-items?' + filter)
             .reply(200, {});
 
@@ -103,7 +103,7 @@ describe('Server route config: ', function () {
 
         var filter = "filter=%7B%27metadata.contentType%27:%27radio%27%7D";
 
-        var listRadios = nock('http://localhost:8080')
+        var listRadios = nock('http://localhost:8090')
             .get('/hub-admin/content-items?' + filter)
             .reply(200, {});
 

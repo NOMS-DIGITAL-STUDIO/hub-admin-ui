@@ -18,13 +18,13 @@ describe('Upload routes: ', function () {
 
     it('upload response re-states request parameters', function (done) {
 
-        var postFile = nock('http://localhost:8080')
+        var postFile = nock('http://localhost:8090')
             .post('/hub-admin/content-items')
             .reply(201);
 
         var filter = "filter=%7B%27metadata.contentType%27:%27prospectus%27%7D";
 
-        var listPdfs = nock('http://localhost:8080')
+        var listPdfs = nock('http://localhost:8090')
             .get('/hub-admin/content-items?' + filter)
             .reply(200, {});
 
@@ -47,13 +47,13 @@ describe('Upload routes: ', function () {
 
         var start = moment({second: 0, millisecond: 0});
 
-        var postFile = nock('http://localhost:8080')
+        var postFile = nock('http://localhost:8090')
             .post('/hub-admin/content-items')
             .reply(201);
 
         var filter = "filter=%7B%27metadata.contentType%27:%27prospectus%27%7D";
 
-        var listPdfs = nock('http://localhost:8080')
+        var listPdfs = nock('http://localhost:8090')
             .get('/hub-admin/content-items?' + filter)
             .reply(200, {});
 
@@ -75,7 +75,7 @@ describe('Upload routes: ', function () {
 
     it('propagates response status received from hub-admin rest', function (done) {
 
-        var postFile = nock('http://localhost:8080')
+        var postFile = nock('http://localhost:8090')
             .post('/hub-admin/content-items')
             .reply(400);
 

@@ -11,7 +11,7 @@ describe('Hub Admin Client: ', function () {
     var client;
 
     var appConfig = {
-        'adminServerRoot': 'http://localhost:8080',
+        'adminServerRoot': 'http://localhost:8090',
         'userName' : 'user',
         'password' : 'password'
     };
@@ -25,7 +25,7 @@ describe('Hub Admin Client: ', function () {
 
         var filter = "filter=%7B%27metadata.contentType%27:%27prospectus%27%7D";
 
-        var listContentItems = nock('http://localhost:8080')
+        var listContentItems = nock('http://localhost:8090')
             .get("/hub-admin/content-items?" + filter)
             .reply(200, {'contentItems': 'stubbed response'});
 
@@ -43,7 +43,7 @@ describe('Hub Admin Client: ', function () {
 
         var filter = "filter=%7B%27metadata.contentType%27:%27prospectus%27%7D";
 
-        var listContentItems = nock('http://localhost:8080')
+        var listContentItems = nock('http://localhost:8090')
             .get("/hub-admin/content-items?" + filter)
             .replyWithError('something went wrong');
 
