@@ -72,7 +72,7 @@ var nunjucksAppEnv = nunjucks.configure(views, {
 
 var dateFilter = require('nunjucks-date-filter');
 nunjucksAppEnv.addFilter('date', dateFilter);
-dateFilter.setDefaultFormat('HH:MM on DD/MM/YYYY');
+dateFilter.setDefaultFormat('HH:mm on DD/MM/YYYY');
 
 /* jshint ignore:end */
 
