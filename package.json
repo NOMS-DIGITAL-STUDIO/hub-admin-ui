@@ -4,7 +4,7 @@
   "description": "UI for the Hub administrator",
   "main": "server.js",
   "engines": {
-    "node": "6.9.4"
+    "node": "6.11.1"
   },
   "scripts": {
     "start": "gulp && node .",
